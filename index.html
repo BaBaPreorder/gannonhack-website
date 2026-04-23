@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home: GannonHack.Club</title>
+  <link rel="stylesheet" href="css/shared.css" />
+  <style>
+#home{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:6rem 2rem 4rem;}
+.hero-inner{max-width:720px;}
+.hero-badge{display:inline-block;background:rgba(192,57,43,0.18);border:1px solid var(--accent);color:var(--accent2);font-size:.78rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:.35rem 1rem;border-radius:999px;margin-bottom:1.5rem;}
+.hero-title{font-size:clamp(2.8rem,6vw,5rem);font-weight:900;line-height:1.1;margin-bottom:1.25rem;}
+.hero-title .line1{color:var(--text);}
+.hero-title .line2{background:linear-gradient(135deg,var(--gold),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-sub{font-size:1.15rem;color:var(--muted);margin-bottom:2.5rem;line-height:1.7;}
+.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+.stats-bar{position:relative;z-index:1;display:flex;justify-content:center;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:rgba(30,5,5,0.7);backdrop-filter:blur(8px);}
+.stat{flex:1;max-width:200px;text-align:center;padding:1.5rem 1rem;border-right:1px solid var(--border);}
+.stat:last-child{border-right:none;}
+.stat-num{font-size:2rem;font-weight:800;color:var(--gold);}
+.stat-label{font-size:.8rem;color:var(--muted);margin-top:.2rem;}
+#gallery{padding:5rem 2rem;background:var(--bg2);}
+.gs-wrap{position:relative;max-width:1100px;margin:0 auto;border-radius:16px;overflow:hidden;border:1px solid var(--border);box-shadow:0 20px 60px rgba(0,0,0,.6);background:#000;}
+.gs-main{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;}
+.gs-slide{position:absolute;inset:0;opacity:0;transition:opacity .9s cubic-bezier(.4,0,.2,1);}
+.gs-slide.active{opacity:1;}
+.gs-slide img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.05);transition:transform 7s ease-out;}
+.gs-slide.active img{transform:scale(1);}
+.gs-main::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.06) 2px,rgba(0,0,0,.06) 4px);pointer-events:none;z-index:2;}
+.gs-overlay{position:absolute;inset:0;z-index:3;background:linear-gradient(to top,rgba(10,0,0,.8) 0%,transparent 50%,rgba(10,0,0,.2) 100%);}
+.gs-corner{position:absolute;z-index:4;width:30px;height:30px;border-color:rgba(212,160,23,.65);border-style:solid;}
+.gs-corner.tl{top:14px;left:14px;border-width:2px 0 0 2px;}.gs-corner.tr{top:14px;right:14px;border-width:2px 2px 0 0;}
+.gs-corner.bl{bottom:60px;left:14px;border-width:0 0 2px 2px;}.gs-corner.br{bottom:60px;right:14px;border-width:0 2px 2px 0;}
+.gs-caption{position:absolute;bottom:0;left:0;right:0;padding:1.25rem 1.5rem;z-index:5;display:flex;align-items:flex-end;justify-content:space-between;}
+.gs-counter{font-size:.72rem;font-weight:700;letter-spacing:2px;color:var(--gold);font-family:monospace;}
+.gs-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:6;width:44px;height:44px;border-radius:50%;background:rgba(20,0,0,.7);border:1px solid rgba(212,160,23,.4);color:var(--gold);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s,transform .2s;backdrop-filter:blur(6px);}
+.gs-arrow:hover{background:rgba(192,57,43,.8);transform:translateY(-50%) scale(1.1);}
+.gs-arrow.prev{left:14px;}.gs-arrow.next{right:14px;}
+.gs-progress{position:absolute;bottom:0;left:0;right:0;height:2px;background:rgba(255,255,255,.1);z-index:7;}
+.gs-bar{height:100%;background:linear-gradient(90deg,var(--accent),var(--gold));width:0;}
+.gs-thumbs{display:flex;gap:6px;padding:8px;background:rgba(8,0,0,.95);overflow-x:auto;scrollbar-width:none;}
+.gs-thumbs::-webkit-scrollbar{display:none;}
+.gs-thumb{flex:0 0 88px;height:54px;border-radius:5px;overflow:hidden;cursor:pointer;border:2px solid transparent;transition:border-color .2s,opacity .2s;opacity:.45;}
+.gs-thumb.active{border-color:var(--gold);opacity:1;}.gs-thumb:hover{opacity:.8;}
+.gs-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+</style>
+</head>
+<body>
+<canvas id="dotCanvas"></canvas>
+<nav>
+  <a href="index.html" class="nav-logo">Gannon<span>Hack</span>.Club</a>
+  <div class="nav-links">
+    <a href="index.html" class="active">Home</a>
+    <a href="about/index.html">About Us</a>
+    <a href="blog/index.html">Blog</a>
+    <a href="https://ctf.gannonhacks.club" target="_blank" rel="noopener">CTF</a>
+    <a href="contact/index.html">Contact</a>
+  </div>
+</nav>
+<div class="page-wrap">
+  <section id="home">
+    <div class="hero-inner">
+      <div class="hero-badge">Gannon University &middot; Cybersecurity Club</div>
+      <h1 class="hero-title"><div class="line1">Welcome to</div><div class="line2">GannonHack.Club</div></h1>
+      <p class="hero-sub">A community of hackers, defenders, and problem solvers.<br>Learn. Compete. Build. Break things ethically.</p>
+      <div class="hero-btns">
+        <a href="about/index.html" class="btn btn-primary">Get Started</a>
+        <a href="https://ctf.gannonhacks.club" target="_blank" rel="noopener" class="btn btn-outline">Explore CTF</a>
+      </div>
+    </div>
+  </section>
+  <div class="stats-bar">
+    <div class="stat"><div class="stat-num">10+</div><div class="stat-label">Members</div></div>
+    <div class="stat"><div class="stat-num">2</div><div class="stat-label">CTF Events</div></div>
+    <div class="stat"><div class="stat-num">1</div><div class="stat-label">Awards Won</div></div>
+    <div class="stat"><div class="stat-num">2026</div><div class="stat-label">Founded</div></div>
+  </div>
+  <section id="gallery">
+    <div class="section-header">
+      <div class="section-tag">Moments</div>
+      <h2 class="section-title">Club Gallery</h2>
+      <p class="section-sub">Highlights from our events, competitions, and meetups</p>
+    </div>
+    <div class="gs-wrap">
+      <div class="gs-main" id="gsMain">
+        <div class="gs-overlay"></div>
+        <div class="gs-corner tl"></div><div class="gs-corner tr"></div>
+        <div class="gs-corner bl"></div><div class="gs-corner br"></div>
+        <div class="gs-caption"><span class="gs-counter" id="gsCounter">01 / 08</span></div>
+        <button class="gs-arrow prev" onclick="gsNav(-1)">&#8592;</button>
+        <button class="gs-arrow next" onclick="gsNav(1)">&#8594;</button>
+        <div class="gs-progress"><div class="gs-bar" id="gsBar"></div></div>
+      </div>
+      <div class="gs-thumbs" id="gsThumbs"></div>
+    </div>
+  </section>
+
+  <!-- ABOUT PREVIEW -->
+  <section style="padding:5rem 2rem;background:var(--bg);">
+    <div class="section-header">
+      <div class="section-tag">Our Story</div>
+      <h2 class="section-title">About Us</h2>
+      <p class="section-sub">Who we are and how we got here</p>
+    </div>
+    <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;">
+      <div>
+        <h3 style="font-size:1.5rem;font-weight:800;color:var(--gold);margin-bottom:1rem;">Building the Next Generation of Cybersecurity Professionals</h3>
+        <p style="color:var(--muted);line-height:1.8;margin-bottom:1rem;">GannonHack.Club is Gannon University's premier cybersecurity and hacking club. We bring together students passionate about information security, ethical hacking, and CTF competitions.</p>
+        <p style="color:var(--muted);line-height:1.8;margin-bottom:1.5rem;">Whether you're a complete beginner or an experienced security researcher, there's a place for you here.</p>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+          <a href="about/index.html" class="btn btn-primary">Learn More</a>
+          <a href="contact/index.html" class="btn btn-outline">Join the Club</a>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:1.25rem;">
+        <div style="display:flex;gap:1rem;"><div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--gold));display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:800;flex-shrink:0;color:#fff;">4</div><div><h4 style="font-weight:700;">BSidesROC, 2026</h4><p style="font-size:.85rem;color:var(--muted);margin-top:.2rem;line-height:1.6;">A new cohort of Gannon University cybersecurity students demonstrated strong technical skills and competitive excellence at the BSidesROC 2026 hacker conference.</p></div></div>
+        <div style="display:flex;gap:1rem;"><div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--gold));display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:800;flex-shrink:0;color:#fff;">21</div><div><h4 style="font-weight:700;">First CTF Win, 2021</h4><p style="font-size:.85rem;color:var(--muted);margin-top:.2rem;line-height:1.6;">Placed 1st in the regional collegiate CTF competition.</p></div></div>
+        <div style="display:flex;gap:1rem;"><div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--gold));display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:800;flex-shrink:0;color:#fff;">24</div><div><h4 style="font-weight:700;">Growing Strong, 2024</h4><p style="font-size:.85rem;color:var(--muted);margin-top:.2rem;line-height:1.6;">50+ members, 8 CTF awards, industry partnerships.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOG PREVIEW -->
+  <section style="padding:5rem 2rem;background:var(--bg2);">
+    <div class="section-header">
+      <div class="section-tag">Latest Posts</div>
+      <h2 class="section-title">Blog</h2>
+      <p class="section-sub">Writeups, tutorials, and news from our members</p>
+    </div>
+    <div style="position:relative;max-width:1100px;margin:0 auto;">
+      <button onclick="scrollBlog(-1)" style="position:absolute;top:50%;transform:translateY(-50%);left:-22px;z-index:10;width:44px;height:44px;border-radius:50%;background:rgba(20,0,0,.9);border:1px solid var(--border);color:var(--gold);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;">&#8592;</button>
+      <div id="blogCarousel" style="display:flex;gap:1.25rem;overflow-x:auto;scroll-behavior:smooth;scrollbar-width:none;padding-bottom:.5rem;"></div>
+      <button onclick="scrollBlog(1)" style="position:absolute;top:50%;transform:translateY(-50%);right:-22px;z-index:10;width:44px;height:44px;border-radius:50%;background:rgba(20,0,0,.9);border:1px solid var(--border);color:var(--gold);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;">&#8594;</button>
+    </div>
+    <div style="text-align:center;margin-top:2.5rem;">
+      <a href="blog/index.html" class="btn btn-outline">View All Posts &rarr;</a>
+    </div>
+  </section>
+
+  <!-- CTF PREVIEW -->
+  <section style="padding:5rem 2rem;background:var(--bg);">
+    <div class="section-header">
+      <div class="section-tag">Competitions</div>
+      <h2 class="section-title">CTF</h2>
+      <p class="section-sub">Categories we compete in and train for</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;max-width:1100px;margin:0 auto;">
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.75rem;transition:border-color .2s,transform .2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform=''"><div style="font-size:2rem;margin-bottom:1rem;">🐧</div><h3 style="font-size:1rem;font-weight:700;margin-bottom:.5rem;">Linux Fundamentals</h3><p style="font-size:.85rem;color:var(--muted);line-height:1.6;">Linux Fundamentals through hands-on exercises.</p><span style="display:inline-block;margin-top:1rem;font-size:.7rem;font-weight:700;color:var(--gold);background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.3);padding:.2rem .6rem;border-radius:4px;">Beginner Friendly</span></div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.75rem;transition:border-color .2s,transform .2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform=''"><div style="font-size:2rem;margin-bottom:1rem;">🔐</div><h3 style="font-size:1rem;font-weight:700;margin-bottom:.5rem;">Cryptography</h3><p style="font-size:.85rem;color:var(--muted);line-height:1.6;">Breaking ciphers, RSA attacks, hash collisions.</p><span style="display:inline-block;margin-top:1rem;font-size:.7rem;font-weight:700;color:var(--gold);background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.3);padding:.2rem .6rem;border-radius:4px;">Beginner Friendly</span></div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.75rem;transition:border-color .2s,transform .2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform=''"><div style="font-size:2rem;margin-bottom:1rem;">🌐</div><h3 style="font-size:1rem;font-weight:700;margin-bottom:.5rem;">Web Exploitation</h3><p style="font-size:.85rem;color:var(--muted);line-height:1.6;">SQL injection, XSS, SSRF, SSTI, authentication bypass</p><span style="display:inline-block;margin-top:1rem;font-size:.7rem;font-weight:700;color:var(--gold);background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.3);padding:.2rem .6rem;border-radius:4px;">Intermediate</span></div>
+    </div>
+    <div style="text-align:center;margin-top:2.5rem;">
+      <a href="https://ctf.gannonhacks.club" target="_blank" rel="noopener" class="btn btn-outline">See All Categories &rarr;</a>
+    </div>
+  </section>
+
+  <!-- CONTACT PREVIEW -->
+  <section style="padding:5rem 2rem;background:var(--bg2);">
+    <div class="section-header">
+      <div class="section-tag">Get In Touch</div>
+      <h2 class="section-title">Contact</h2>
+      <p class="section-sub">Want to join, collaborate, or just say hi?</p>
+    </div>
+    <form id="contactForm" novalidate style="max-width:500px;margin:0 auto;display:flex;flex-direction:column;gap:1rem;">
+      <input id="cf-name" type="text" placeholder="Your name" maxlength="100" autocomplete="off"
+        style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:.75rem 1rem;color:var(--text);font-size:.95rem;outline:none;font-family:inherit;" />
+      <input id="cf-email" type="email" placeholder="you@gannon.edu" maxlength="200"
+        style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:.75rem 1rem;color:var(--text);font-size:.95rem;outline:none;font-family:inherit;" />
+      <textarea id="cf-msg" placeholder="Your message..." rows="3" maxlength="2000"
+        style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:.75rem 1rem;color:var(--text);font-size:.95rem;outline:none;resize:vertical;font-family:inherit;"></textarea>
+      <div id="cf-error" style="color:#f87171;font-size:.85rem;display:none;"></div>
+      <div id="cf-ok" style="color:#4ade80;font-size:.85rem;display:none;">Message sent! We'll get back to you soon.</div>
+      <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap;">
+        <button type="submit" class="btn btn-primary">Send Message</button>
+        <a href="contact/index.html" style="color:var(--muted);font-size:.9rem;text-decoration:none;">Full contact page &rarr;</a>
+      </div>
+    </form>
+    <script>
+    (function(){
+      function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#x27;'); }
+      function isEmail(e){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
+      document.getElementById('contactForm').addEventListener('submit',function(e){
+        e.preventDefault();
+        var err=document.getElementById('cf-error'),ok=document.getElementById('cf-ok');
+        err.style.display='none'; ok.style.display='none';
+        var name=document.getElementById('cf-name').value.trim();
+        var email=document.getElementById('cf-email').value.trim();
+        var msg=document.getElementById('cf-msg').value.trim();
+        if(!name){ err.textContent='Please enter your name.'; err.style.display='block'; return; }
+        if(!isEmail(email)){ err.textContent='Please enter a valid email address.'; err.style.display='block'; return; }
+        if(msg.length<10){ err.textContent='Message must be at least 10 characters.'; err.style.display='block'; return; }
+        // Values are safe, use textContent only, never innerHTML with user input
+        console.log('Contact:', esc(name), esc(email), esc(msg));
+        ok.style.display='block';
+        this.reset();
+      });
+    })();
+    </script>
+  </section>
+
+  <footer>&copy; 2025 <span>GannonHack.Club</span> &middot; Gannon University &middot; Erie, PA</footer>
+</div>
+<script src="js/shared.js"></script>
+<script>
+  // Blog carousel
+  function scrollBlog(d) { document.getElementById('blogCarousel').scrollBy({left:d*340,behavior:'smooth'}); }
+
+  // Blog posts, only list posts that actually exist as HTML files.
+  // To add a new post: copy blog/posts/template.html, write your content,
+  // then add an entry here AND in blog/index.html BLOG_POSTS array.
+  const BLOG_PREVIEW = [
+    { emoji:'🔎', tag:'Workshop', date:'Apr 2026', title:'BASC 2026: SAST Rule Writing 101 with Semgrep',   desc:'Write custom static analysis rules for your codebase, taint tracking, pattern operators, CI integration.', href:'blog/posts/basc2026-sast-semgrep.html',          image:'Photo/gallery/semgrep0.jpg' },
+    { emoji:'🩹', tag:'Workshop', date:'Apr 2026', title:'BASC 2026: Vibe Coding a Backport',               desc:"Hands-on lab on backporting CVE-2024-37370 in MIT Kerberos with John Amaral.",     href:'blog/posts/basc2026-backport-workshop.html',     image:'Photo/gallery/basc0.jpeg' },
+    { emoji:'📝', tag:'Writeup',  date:'Jan 2023', title:'PicoCTF 2023, Web Exploitation Writeup',         desc:'Step-by-step walkthrough of web challenges including SQLi and XSS.',               href:'blog/posts/picoctf-2023-web.html',                image:'Photo/gallery/4.jpeg' },
+  ];
+  const bc = document.getElementById('blogCarousel');
+  BLOG_PREVIEW.forEach(p => {
+    const thumb = p.image
+      ? '<img src="'+p.image+'" style="width:100%;height:100%;object-fit:cover;display:block;" />'
+      : '<span style="font-size:2.2rem;">'+p.emoji+'</span>';
+    bc.innerHTML += '<a href="'+p.href+'" style="flex:0 0 300px;background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;text-decoration:none;color:inherit;display:block;transition:transform .2s,box-shadow .2s;" onmouseover="this.style.transform=\'translateY(-4px)\';this.style.boxShadow=\'0 12px 36px rgba(0,0,0,.4)\'" onmouseout="this.style.transform=\'\';this.style.boxShadow=\'\'">'
+      +'<div style="height:160px;background:var(--bg);display:flex;align-items:center;justify-content:center;overflow:hidden;border-bottom:1px solid var(--border);">'+thumb+'</div>'
+      +'<div style="padding:1rem;">'
+      +'<div style="display:flex;gap:.5rem;align-items:center;margin-bottom:.6rem;">'
+      +'<span style="font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent2);background:rgba(192,57,43,.15);padding:.2rem .6rem;border-radius:4px;">'+p.tag+'</span>'
+      +'<span style="font-size:.75rem;color:var(--muted);">'+p.date+'</span></div>'
+      +'<h3 style="font-size:.95rem;font-weight:700;line-height:1.4;margin-bottom:.4rem;">'+p.title+'</h3>'
+      +'<p style="font-size:.82rem;color:var(--muted);line-height:1.5;">'+p.desc+'</p>'
+      +'</div></a>';
+  });
+
+  const GALLERY_IMAGES = [
+    'Photo/gallery/2.jpeg','Photo/gallery/3.jpeg','Photo/gallery/4.jpeg',
+    'Photo/gallery/5.jpeg','Photo/gallery/6.jpeg','Photo/gallery/7.jpeg',
+    'Photo/gallery/8.jpeg','Photo/gallery/9.jpeg','Photo/gallery/10.jpeg',
+    'Photo/gallery/11.jpeg','Photo/gallery/12.jpeg'
+  ];
+  let gsIndex=0, gsTimer;
+  const INTERVAL=5000;
+  function gsBuild() {
+    const main=document.getElementById('gsMain'), th=document.getElementById('gsThumbs');
+    GALLERY_IMAGES.forEach((src,i) => {
+      const s=document.createElement('div');
+      s.className='gs-slide'+(i===0?' active':'');
+      s.innerHTML='<img src="'+src+'" loading="lazy" />';
+      main.insertBefore(s, main.querySelector('.gs-overlay'));
+      const t=document.createElement('div');
+      t.className='gs-thumb'+(i===0?' active':'');
+      t.innerHTML='<img src="'+src+'" loading="lazy" />';
+      t.onclick=()=>gsGo(i); th.appendChild(t);
+    });
+    gsUpdateCounter(); gsStartBar();
+  }
+  function gsGo(n) {
+    const sl=document.querySelectorAll('.gs-slide'), th=document.querySelectorAll('.gs-thumb');
+    sl[gsIndex].classList.remove('active'); th[gsIndex].classList.remove('active');
+    gsIndex=(n+GALLERY_IMAGES.length)%GALLERY_IMAGES.length;
+    sl[gsIndex].classList.add('active'); th[gsIndex].classList.add('active');
+    const tc=document.getElementById('gsThumbs');tc.scrollTo({left:th[gsIndex].offsetLeft-tc.offsetWidth/2+th[gsIndex].offsetWidth/2,behavior:'smooth'});
+    gsUpdateCounter(); gsStartBar();
+  }
+  function gsNav(d) { gsGo(gsIndex+d); }
+  function gsUpdateCounter() { document.getElementById('gsCounter').textContent=String(gsIndex+1).padStart(2,'0')+' / '+String(GALLERY_IMAGES.length).padStart(2,'0'); }
+  function gsStartBar() {
+    clearTimeout(gsTimer);
+    const bar=document.getElementById('gsBar');
+    bar.style.transition='none'; bar.style.width='0%'; bar.offsetHeight;
+    bar.style.transition='width '+INTERVAL+'ms linear'; bar.style.width='100%';
+    gsTimer=setTimeout(()=>gsGo(gsIndex+1), INTERVAL);
+  }
+  gsBuild();
+</script>
+</body></html>

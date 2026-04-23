@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BASC 2026: SAST Rule Writing 101 with Semgrep: GannonHack.Club</title>
+  <link rel="stylesheet" href="../../css/shared.css" />
+  <style>
+    .post-wrap{max-width:780px;margin:0 auto;padding:3rem 2rem 5rem;}
+    .post-header{margin-bottom:2.5rem;padding-bottom:2rem;border-bottom:1px solid var(--border);}
+    .post-meta{display:flex;gap:.75rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap;}
+    .post-tag{font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent2);background:rgba(192,57,43,.15);padding:.2rem .6rem;border-radius:4px;}
+    .post-date{font-size:.8rem;color:var(--muted);}
+    .post-author{font-size:.8rem;color:var(--muted);}
+    .post-title{font-size:clamp(1.8rem,4vw,2.5rem);font-weight:900;line-height:1.2;}
+    .post-cover{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:12px;margin:2rem 0;border:1px solid var(--border);}
+    .post-body{color:var(--muted);line-height:1.9;font-size:1rem;}
+    .post-body h2{font-size:1.4rem;font-weight:800;color:var(--text);margin:2.5rem 0 .75rem;padding-bottom:.5rem;border-bottom:1px solid var(--border);}
+    .post-body h3{font-size:1.1rem;font-weight:700;color:var(--gold);margin:1.75rem 0 .5rem;}
+    .post-body p{margin-bottom:1rem;}
+    .post-body a{color:var(--accent2);text-decoration:underline;}
+    .post-body code{background:var(--card);border:1px solid var(--border);padding:.15rem .45rem;border-radius:4px;font-size:.88rem;font-family:monospace;color:var(--accent2);}
+    .post-body pre{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.25rem 1.5rem;overflow-x:auto;margin:1.25rem 0;}
+    .post-body pre code{background:none;border:none;padding:0;color:#e2e8f0;font-size:.9rem;line-height:1.7;}
+    .post-body ul,ol{margin:.5rem 0 1rem 1.5rem;}
+    .post-body li{margin-bottom:.45rem;}
+    .post-body blockquote{border-left:3px solid var(--accent);padding:.75rem 1.25rem;margin:1.25rem 0;background:rgba(192,57,43,.08);border-radius:0 8px 8px 0;color:var(--text);font-style:italic;}
+    .back-btn{display:inline-flex;align-items:center;gap:.5rem;color:var(--muted);text-decoration:none;font-size:.9rem;margin-bottom:2rem;transition:color .2s;}
+    .back-btn:hover{color:var(--text);}
+    .tip-box{background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.25);border-radius:10px;padding:1rem 1.25rem;margin:1.5rem 0;}
+    .tip-box strong{color:#4ade80;}
+    .warning-box{background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.25);border-radius:10px;padding:1rem 1.25rem;margin:1.5rem 0;}
+    .warning-box strong{color:#fbbf24;}
+    .info-box{background:rgba(99,179,237,.06);border:1px solid rgba(99,179,237,.25);border-radius:10px;padding:1rem 1.25rem;margin:1.5rem 0;}
+    .info-box strong{color:#63b3ed;}
+    .speaker-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin:1.5rem 0;}
+    .speaker-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:.75rem;}
+    .speaker-item{display:flex;gap:.75rem;align-items:flex-start;}
+    .speaker-icon{font-size:1.3rem;flex-shrink:0;}
+    .speaker-name{font-weight:700;color:var(--text);font-size:.9rem;}
+    .speaker-role{font-size:.78rem;color:var(--muted);margin-top:.1rem;}
+    .op-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;margin:.6rem 0;}
+    .op-name{font-family:monospace;font-size:.9rem;color:var(--accent2);font-weight:700;}
+    .op-desc{font-size:.85rem;color:var(--muted);margin-top:.3rem;line-height:1.6;}
+    .op-example{font-size:.82rem;color:var(--text);margin-top:.4rem;font-family:monospace;}
+    .exercise-card{background:rgba(212,160,23,.06);border:1px solid rgba(212,160,23,.25);border-radius:10px;padding:1.1rem 1.25rem;margin:.75rem 0;}
+    .exercise-label{font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem;}
+    .event-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.3);border-radius:8px;padding:.5rem 1rem;font-size:.8rem;color:var(--gold);font-weight:600;margin-bottom:1.5rem;}
+    .inline-img{width:100%;border-radius:10px;border:1px solid var(--border);margin:1.5rem 0;}
+    .taint-flow{display:flex;flex-direction:column;gap:.4rem;margin:1.25rem 0;padding:1.25rem;background:var(--card);border:1px solid var(--border);border-radius:10px;}
+    .taint-step{display:flex;gap:.75rem;align-items:flex-start;font-size:.88rem;}
+    .taint-num{color:var(--gold);font-weight:800;font-size:.85rem;min-width:1.2rem;flex-shrink:0;margin-top:.1rem;}
+    .taint-text{color:var(--muted);line-height:1.6;}
+    .taint-text code{background:var(--bg2);border:1px solid var(--border);padding:.1rem .35rem;border-radius:3px;font-size:.83rem;color:var(--accent2);}
+  </style>
+</head>
+<body>
+<canvas id="dotCanvas"></canvas>
+<nav>
+  <a href="../../index.html" class="nav-logo">Gannon<span>Hack</span>.Club</a>
+  <div class="nav-links">
+    <a href="../../index.html">Home</a>
+    <a href="../../about/index.html">About Us</a>
+    <a href="../index.html" class="active">Blog</a>
+    <a href="https://ctf.gannonhacks.club" target="_blank" rel="noopener">CTF</a>
+    <a href="../../contact/index.html">Contact</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <div class="post-wrap">
+    <a href="../index.html" class="back-btn">&#8592; Back to Blog</a>
+
+    <div class="post-header">
+      <div class="post-meta">
+        <span class="post-tag">Workshop</span>
+        <span class="post-tag" style="color:var(--gold);background:rgba(212,160,23,.12);">BASC 2026</span>
+        <span class="post-date">April 2026</span>
+        <span class="post-author">by GannonHack Team</span>
+      </div>
+      <h1 class="post-title">SAST Rule Writing 101: Hands-on Custom Static Analysis with Semgrep</h1>
+    </div>
+
+    <div class="event-badge">
+      🏛️ BASC 2026 &nbsp;·&nbsp; Afternoon Session &nbsp;·&nbsp; 13:00–15:30
+    </div>
+
+    <img class="post-cover" src="../../Photo/gallery/semgrep0.jpg" alt="SAST Rule Writing Workshop" />
+
+    <div class="post-body">
+      <p>
+        The afternoon at BASC 2026 was one of the most hands-on sessions we've attended.
+        Four instructors from Semgrep and Cloud Security Partners walked a full room through
+        building custom SAST rules from scratch, starting with why grep isn't enough,
+        all the way to multi-hop taint analysis across real codebases.
+      </p>
+
+      <div class="speaker-card">
+        <div style="font-weight:800;color:var(--text);margin-bottom:.5rem;">Workshop Instructors</div>
+        <div class="speaker-grid">
+          <div class="speaker-item"><div class="speaker-icon">🎤</div><div><div class="speaker-name">Tony Quadros</div><div class="speaker-role">Semgrep · OWASP Maine Chapter Leader</div></div></div>
+          <div class="speaker-item"><div class="speaker-icon">🎤</div><div><div class="speaker-name">Derian Stenglein</div><div class="speaker-role">Semgrep</div></div></div>
+          <div class="speaker-item"><div class="speaker-icon">🎤</div><div><div class="speaker-name">Diptendu Kar</div><div class="speaker-role">Semgrep</div></div></div>
+          <div class="speaker-item"><div class="speaker-icon">🎤</div><div><div class="speaker-name">John Poulin</div><div class="speaker-role">Cloud Security Partners</div></div></div>
+        </div>
+      </div>
+
+      <p>The workshop followed a clear progression:</p>
+      <ol>
+        <li>Static Analysis Essentials &amp; Conceptual Fundamentals</li>
+        <li>Basics: Patterns, Ellipsis, and Metavariables</li>
+        <li>Pattern Operators</li>
+        <li>Hands-on Exercises</li>
+        <li>Advanced: Taint Mode</li>
+      </ol>
+
+      <h2>Why Not Just Use grep?</h2>
+      <p>
+        The session opened with a simple question: if you want to find all calls to a dangerous function
+        like <code>gets()</code>, why not just grep for it? The answer is that grep operates purely on
+        characters, it has no understanding of code structure.
+      </p>
+      <p>
+        Suppose your codebase contains <code>print</code> as a function call, as a comment, inside a string,
+        and as part of an identifier like <code>isprinted</code>. Grep matches all four.
+        Semgrep matches only the actual function call, because it parses source code into an
+        <strong>Abstract Syntax Tree (AST)</strong> first.
+      </p>
+
+      <div class="info-box">
+        <strong>How Semgrep works under the hood:</strong><br/>
+        1. Parse the rule pattern into an AST<br/>
+        2. Parse the target source file into an AST<br/>
+        3. Match both ASTs against each other, semantically, not syntactically
+      </div>
+
+      <h2>Why Semgrep?</h2>
+      <ul>
+        <li><strong>Open-source</strong> with community-contributed language support and rules</li>
+        <li><strong>Customizable</strong>, patterns are designed for your code and your security requirements</li>
+        <li><strong>Multilingual</strong>, supports 30+ languages</li>
+        <li><strong>No build required</strong>, runs on source code directly, so it's fast</li>
+        <li><strong>No DSL</strong>, Semgrep patterns look like the language they're scanning. No API docs to memorize. If you can read and write code, you can write rules.</li>
+        <li><strong>YAML</strong>, rules are plain text, version-controllable, and reviewable</li>
+      </ul>
+
+      <img class="inline-img" src="../../Photo/gallery/semgrep1.jpeg" alt="Workshop in progress" />
+
+      <h2>Rule Basics: Patterns, Ellipsis, and Metavariables</h2>
+
+      <h3>Test Annotations</h3>
+      <p>
+        Before writing rules, the workshop introduced test annotations in the Semgrep Playground.
+        These let you declare whether a match is expected on the next line:
+      </p>
+      <pre><code># ruleid: my-rule-id
+dangerous_call()    # ← expects a match
+
+# ok: my-rule-id
+safe_call()         # ← expects NO match</code></pre>
+      <p>
+        If your rule misses a <code>ruleid</code> line or incorrectly matches an <code>ok</code> line,
+        the Playground throws an error. This forces you to document intent and validate behaviour
+        simultaneously.
+      </p>
+
+      <h3>The Ellipsis Operator <code>...</code></h3>
+      <p>
+        The ellipsis matches <em>zero or more</em> occurrences of some element, parameters, arguments,
+        or statements. Think of it as <code>.*</code> in regex, but for code structure.
+      </p>
+      <ul>
+        <li><code>subprocess.Popen(...)</code>, matches all calls regardless of number or type of arguments</li>
+        <li><code>palindrome("...")</code>, matches any string argument, but not integers</li>
+        <li><code>open(..., "r", ...)</code>, matches calls where <code>"r"</code> appears anywhere in the args</li>
+        <li><code>open("r", ...)</code>, matches only when <code>"r"</code> is the <em>first</em> argument</li>
+      </ul>
+
+      <div class="warning-box">
+        <strong>⚠️ Ellipsis is not a silver bullet.</strong> <code>def ...</code> will not work to match a function
+        declaration, ellipsis is only valid where a sequence of parameters, arguments, or statements would
+        be syntactically legal. For function names and identifiers, you need <strong>metavariables</strong>.
+      </div>
+
+      <h3>Metavariables <code>$VAR</code></h3>
+      <p>
+        Metavariables match <em>exactly one</em> occurrence of an element, an argument, expression,
+        or identifier, when you don't know exactly what it will be. They must start with <code>$</code>
+        and use only uppercase letters, digits, and underscores.
+      </p>
+      <p>
+        The key distinction: the ellipsis matches <em>zero or more</em> things; a metavariable matches
+        <em>exactly one</em>. Use <code>gets($ARG)</code> instead of <code>gets(...)</code> when you care
+        about capturing what was passed.
+      </p>
+
+      <h2>Pattern Operators</h2>
+      <p>Pattern operators are the building blocks for expressing precise security conditions:</p>
+
+      <div class="op-card">
+        <div class="op-name">pattern:</div>
+        <div class="op-desc">Matches code that fits the expression. Use for finding a single function call, assignment, class definition, etc.</div>
+        <div class="op-example">pattern: gets(...)</div>
+      </div>
+
+      <div class="op-card">
+        <div class="op-name">pattern-not:</div>
+        <div class="op-desc">Opposite of <code>pattern</code>. Removes false positives. <strong>Cannot be used alone</strong>, must be combined with a <code>pattern</code>.</div>
+        <div class="op-example">pattern-not: generate_pdf(..., from_url=True, ...)</div>
+      </div>
+
+      <div class="op-card">
+        <div class="op-name">patterns:</div>
+        <div class="op-desc">Logical AND of multiple child operators. Used when you need to combine <code>pattern</code> and <code>pattern-not</code> together.</div>
+      </div>
+
+      <div class="op-card">
+        <div class="op-name">pattern-either:</div>
+        <div class="op-desc">Logical OR. Match if <em>any</em> child pattern matches.</div>
+        <div class="op-example">e.g. match requests.get OR requests.post (both are vulnerable)</div>
+      </div>
+
+      <div class="op-card">
+        <div class="op-name">pattern-inside:</div>
+        <div class="op-desc">Match findings that reside <em>within</em> another pattern. Think of it as a pre-condition: "only flag this if it's inside that context."</div>
+        <div class="op-example">e.g. sqlquery.execute(...) when inside a mysqlconnection block</div>
+      </div>
+
+      <div class="op-card">
+        <div class="op-name">pattern-not-inside:</div>
+        <div class="op-desc">Opposite of <code>pattern-inside</code>. Find problematic code that is <em>not</em> inside code that would mitigate the issue.</div>
+        <div class="op-example">e.g. open() not inside a try block</div>
+      </div>
+
+      <div class="op-card">
+        <div class="op-name">pattern-regex:</div>
+        <div class="op-desc">PCRE2 regex substring search. Works like grep, character-level matching. Use when you need to check the literal value of a string.</div>
+        <div class="op-example">e.g. flag requests.get calls to "http://" (non-TLS) URLs</div>
+      </div>
+
+      <div class="op-card">
+        <div class="op-name">metavariable-regex:</div>
+        <div class="op-desc">Like <code>pattern-regex</code>, but applied only to the value captured in a metavariable. Useful as an alternative to many <code>pattern-either</code> entries.</div>
+        <div class="op-example">e.g. match parsexml, parsexml2json, parsexmltopdf using one regex</div>
+      </div>
+
+      <div class="op-card">
+        <div class="op-name">metavariable-comparison:</div>
+        <div class="op-desc">Compare a metavariable against a Python expression. Supports boolean, arithmetic, and comparison operators. Use for numeric thresholds.</div>
+        <div class="op-example">e.g. flag socket.open() calls with any port &gt; 10000</div>
+      </div>
+
+      <img class="inline-img" src="../../Photo/gallery/semgrep2.jpg" alt="Working through pattern operators" />
+
+      <h2>Hands-on Exercises</h2>
+      <p>Three exercises were given to attendees to work through with a partner:</p>
+
+      <div class="exercise-card">
+        <div class="exercise-label">Exercise 1</div>
+        <div style="color:var(--text);font-weight:700;margin-bottom:.3rem;">requests.get with three specified params</div>
+        <div style="font-size:.88rem;color:var(--muted);">Write a rule that matches calls to <code>requests.get</code> which specify a string URL as the positional argument, any timeout value, and <code>verify=True</code>. Tests metavariable and positional argument matching.</div>
+      </div>
+
+      <div class="exercise-card">
+        <div class="exercise-label">Exercise 2</div>
+        <div style="color:var(--text);font-weight:700;margin-bottom:.3rem;">Enforce order of API calls</div>
+        <div style="font-size:.88rem;color:var(--muted);">In a financial trading app, <code>verify_transaction</code> must always be called before <code>make_transaction</code>. Write a rule that flags any call to <code>make_transaction</code> that is not preceded by <code>verify_transaction</code>. Uses <code>pattern-not-inside</code>.</div>
+      </div>
+
+      <pre><code>// ruleid: find-unverified-transactions-exercise
+public void bad(Transaction t) {
+    make_transaction(t);  // ← no verify first, flagged
+}</code></pre>
+
+      <div class="exercise-card">
+        <div class="exercise-label">Exercise 3</div>
+        <div style="color:var(--text);font-weight:700;margin-bottom:.3rem;">Flag weak RSA keys</div>
+        <div style="font-size:.88rem;color:var(--muted);">Flag RSA key generation calls where the key size is below 2048 bits. Uses <code>metavariable-comparison</code> to check numeric key size at the pattern level.</div>
+      </div>
+
+      <pre><code>// ruleid: use-of-weak-rsa-key
+pvk, err := rsa.GenerateKey(rand.Reader, 1024)   // ← 1024 &lt; 2048, flagged
+pvk, err := rsa.MultiPrimeKey(rand.Reader, 3, 1024)  // ← also flagged</code></pre>
+
+      <h2>Advanced: Taint Mode</h2>
+      <p>
+        Pattern-based rules are powerful, but many real vulnerabilities can't be expressed as a
+        single pattern. SQL injection, command injection, XSS, these all share the same structure:
+        <em>untrusted data flows from one place to another</em>.
+      </p>
+      <p>
+        Taint analysis is a form of dataflow analysis that tracks whether data from a
+        <strong>source</strong> can reach a <strong>sink</strong>. Data that originated from a source
+        is called <em>tainted</em>.
+      </p>
+
+      <h3>Tracing taint step by step</h3>
+      <p>Consider this Java example:</p>
+      <pre><code>public class DataflowExample {
+    public static void main(String args[]) throws IOException {
+        String cmd = args[0];
+        Runtime.getRuntime().exec(cmd);
+    }
+}</code></pre>
+
+      <div class="taint-flow">
+        <div class="taint-step"><div class="taint-num">1</div><div class="taint-text">The <strong>source</strong>: <code>args</code>, program arguments are user-controlled input</div></div>
+        <div class="taint-step"><div class="taint-num">2</div><div class="taint-text">The expression <code>args[0]</code> is tainted</div></div>
+        <div class="taint-step"><div class="taint-num">3</div><div class="taint-text">The newly declared variable <code>cmd = args[0]</code> carries the taint</div></div>
+        <div class="taint-step"><div class="taint-num">4</div><div class="taint-text">The tainted variable <code>cmd</code> is used as an argument</div></div>
+        <div class="taint-step"><div class="taint-num">5</div><div class="taint-text">We reach the <strong>sink</strong>: <code>Runtime.getRuntime().exec(cmd)</code>, a finding is produced here</div></div>
+      </div>
+
+      <h3>Writing the taint rule</h3>
+      <p>In Semgrep, you declare sources, sinks, and optionally sanitizers. Semgrep handles all the paths in between:</p>
+      <pre><code>rules:
+  - id: detect-runtime-exec-injection
+    mode: taint
+    languages: [java]
+    severity: ERROR
+    message: User-controlled input reaches Runtime.exec, potential command injection
+    pattern-sources:
+      - pattern: |
+          void main(String $ARGS[]) { ... }
+        focus-metavariable: $ARGS
+    pattern-sinks:
+      - pattern: |
+          Runtime.getRuntime().exec($CMD)
+        focus-metavariable: $CMD</code></pre>
+
+      <h3>Sanitizers break the taint chain</h3>
+      <p>
+        If the data passes through a sanitizing function before reaching the sink, Semgrep
+        recognizes the taint is cleared and produces <em>no finding</em>:
+      </p>
+
+      <pre><code>String sanitizedPath = filterFilePath(args[0]);  // ← taint ends here
+String cmd = baseCmd + " " + sanitizedPath;
+Runtime.getRuntime().exec(cmd);                  // ← safe, no finding</code></pre>
+
+      <pre><code>    pattern-sanitizers:
+      - pattern: filterFilePath(...)</code></pre>
+
+      <div class="tip-box">
+        <strong>💡 Taint mode key insight:</strong> You only declare where untrusted data enters
+        (sources), where it must not reach (sinks), and what neutralizes it (sanitizers).
+        Semgrep traces all possible paths through your code, including across assignments,
+        function calls, and intermediate variables.
+      </div>
+
+      <h3>Taint Exercises</h3>
+
+      <div class="exercise-card">
+        <div class="exercise-label">Taint Exercise 1</div>
+        <div style="color:var(--text);font-weight:700;margin-bottom:.3rem;">HttpServletRequest parameters → Runtime.exec</div>
+        <div style="font-size:.88rem;color:var(--muted);">Write a taint rule in Java that flags all paths where <code>HttpServletRequest</code> parameters reach a <code>Runtime.exec</code> call. Explores typed metavariables and inline type syntax.</div>
+      </div>
+
+      <div class="exercise-card">
+        <div class="exercise-label">Taint Exercise 2</div>
+        <div style="color:var(--text);font-weight:700;margin-bottom:.3rem;">XSS in ExpressJS</div>
+        <div style="font-size:.88rem;color:var(--muted);">An Express app handles request data that could be vulnerable to XSS. Write a taint rule that flags user input reaching <code>res.write</code> or <code>res.send</code> while correctly respecting sanitization calls in between.</div>
+      </div>
+
+      <img class="inline-img" src="../../Photo/gallery/semgrep3.jpg" alt="Team at BASC 2026 workshop" />
+
+      <h2>What the Workshop Didn't Cover</h2>
+      <p>
+        The instructors were upfront that several advanced features were out of scope for a
+        2.5-hour session. These are worth exploring on your own:
+      </p>
+      <ul>
+        <li><strong>Taint propagators</strong>, define custom functions that transform but preserve taint</li>
+        <li><strong>Taint labels</strong>, tag different kinds of taint to reason about them independently</li>
+        <li><strong>Generic mode</strong>, run Semgrep patterns against file types it doesn't natively parse</li>
+        <li><strong>Autofix</strong>, have Semgrep automatically rewrite the matching code to the safe version</li>
+      </ul>
+
+      <h2>Key Takeaways</h2>
+      <ul>
+        <li>Semgrep operates on ASTs, not text, this is what makes it semantic and not just a smarter grep.</li>
+        <li>Generic rules catch generic bugs. Custom rules catch <em>your</em> bugs, the ones in your framework, your internal APIs, your security requirements.</li>
+        <li>The ellipsis (<code>...</code>) and metavariables (<code>$VAR</code>) are the core building blocks. Master them first.</li>
+        <li>Pattern operators combine to express precise conditions: AND, OR, inside, not-inside, regex on values.</li>
+        <li>Taint mode lets you catch injection-class vulnerabilities end-to-end without tracing every code path manually.</li>
+        <li>Always write test annotations alongside your rules, they document intent and prevent future regressions.</li>
+      </ul>
+
+      <blockquote>
+        In a world with increasing technical and security debt, we cannot play catch-up.
+        We cannot chase vulnerabilities. We must be proactive, and fight the fight from the beginning.
+       , Workshop Closing Slide
+      </blockquote>
+
+      <h2>Resources</h2>
+      <ul>
+        <li><a href="https://semgrep.dev/learn" target="_blank" rel="noopener">semgrep.dev/learn</a>, Interactive Semgrep tutorial</li>
+        <li><a href="https://semgrep.dev/playground" target="_blank" rel="noopener">semgrep.dev/playground</a>, Write and test rules live in the browser</li>
+        <li><a href="https://semgrep.dev/r" target="_blank" rel="noopener">semgrep.dev/r</a>, Open community rule registry</li>
+        <li><a href="https://github.com/CloudSecurityPartners/terraform-research/" target="_blank" rel="noopener">CloudSecurityPartners/terraform-research</a>, Semgrep rules for Terraform / HCL (from John Poulin's slides)</li>
+        <li>Semgrep Academy, free online learning platform with courses on rule writing and secure coding</li>
+        <li>Pieter De Cremer's YouTube channel, video walkthroughs on Semgrep and AppSec</li>
+      </ul>
+    </div>
+  </div>
+  <footer>&copy; 2025 <span>GannonHack.Club</span> &middot; Gannon University &middot; Erie, PA</footer>
+</div>
+
+<script src="../../js/shared.js"></script>
+</body>
+</html>

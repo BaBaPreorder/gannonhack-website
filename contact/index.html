@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact: GannonHack.Club</title>
+  <link rel="stylesheet" href="../css/shared.css" />
+  <style>
+.contact-inner{max-width:600px;margin:3rem auto;padding:0 2rem 5rem;}
+.contact-form{margin-top:2.5rem;display:flex;flex-direction:column;gap:1rem;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.form-group{display:flex;flex-direction:column;gap:.4rem;}
+.form-group label{font-size:.8rem;font-weight:600;color:var(--muted);}
+.form-group input,.form-group textarea{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:.75rem 1rem;color:var(--text);font-size:.95rem;outline:none;transition:border-color .2s;font-family:inherit;}
+.form-group input:focus,.form-group textarea:focus{border-color:var(--accent);}
+.form-group textarea{resize:vertical;min-height:120px;}
+</style>
+</head>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';">
+<body>
+<canvas id="dotCanvas"></canvas>
+<nav>
+  <a href="../index.html" class="nav-logo">Gannon<span>Hack</span>.Club</a>
+  <div class="nav-links">
+    <a href="../index.html">Home</a>
+    <a href="../about/index.html">About Us</a>
+    <a href="../blog/index.html">Blog</a>
+    <a href="https://ctf.gannonhacks.club" target="_blank" rel="noopener">CTF</a>
+    <a href="../contact/index.html" class="active">Contact</a>
+  </div>
+</nav>
+<div class="page-wrap">
+  <div class="page-hero">
+    <div class="section-tag">Get In Touch</div>
+    <h1>Contact</h1>
+    <p>Want to join, collaborate, or just say hi?</p>
+  </div>
+  <div class="contact-inner">
+    <form class="contact-form" id="contactForm" novalidate>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="cf-fname">First Name</label>
+          <input id="cf-fname" type="text" placeholder="John" maxlength="100" autocomplete="given-name" />
+        </div>
+        <div class="form-group">
+          <label for="cf-lname">Last Name</label>
+          <input id="cf-lname" type="text" placeholder="Doe" maxlength="100" autocomplete="family-name" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="cf-email">Email</label>
+        <input id="cf-email" type="email" placeholder="you@gannon.edu" maxlength="200" autocomplete="email" />
+      </div>
+      <div class="form-group">
+        <label for="cf-msg">Message</label>
+        <textarea id="cf-msg" placeholder="Tell us about yourself or ask a question..." maxlength="3000"></textarea>
+      </div>
+      <div id="cf-error" role="alert" style="color:#f87171;font-size:.875rem;display:none;padding:.5rem .75rem;background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.3);border-radius:6px;"></div>
+      <div id="cf-ok" role="status" style="color:#4ade80;font-size:.875rem;display:none;padding:.5rem .75rem;background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.3);border-radius:6px;">Message received! We'll get back to you soon.</div>
+      <button type="submit" class="btn btn-primary" style="align-self:flex-start">Send Message</button>
+    </form>
+  </div>
+  <footer>&copy; 2025 <span>GannonHack.Club</span> &middot; Gannon University &middot; Erie, PA</footer>
+</div>
+<script src="../js/shared.js"></script>
+<script>
+(function() {
+  // Escape HTML entities, never insert user input as innerHTML
+  function esc(s) {
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#x27;')
+      .replace(/\//g, '&#x2F;');
+  }
+
+  function isValidEmail(e) {
+    return /^[^\s@]{1,64}@[^\s@]{1,255}\.[^\s@]{2,}$/.test(e);
+  }
+
+  function showError(msg) {
+    var el = document.getElementById('cf-error');
+    el.textContent = msg; // textContent, never innerHTML
+    el.style.display = 'block';
+    document.getElementById('cf-ok').style.display = 'none';
+  }
+
+  function showOk() {
+    document.getElementById('cf-ok').style.display = 'block';
+    document.getElementById('cf-error').style.display = 'none';
+  }
+
+  document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    var fname = document.getElementById('cf-fname').value.trim();
+    var lname = document.getElementById('cf-lname').value.trim();
+    var email = document.getElementById('cf-email').value.trim();
+    var msg   = document.getElementById('cf-msg').value.trim();
+
+    // Validate
+    if (!fname || !lname)  return showError('Please enter your full name.');
+    if (!isValidEmail(email)) return showError('Please enter a valid email address.');
+    if (msg.length < 10)   return showError('Message must be at least 10 characters.');
+
+    // Safe, values only ever used as textContent or sent via fetch as JSON
+    var payload = {
+      name:    esc(fname) + ' ' + esc(lname),
+      email:   esc(email),
+      message: esc(msg),
+    };
+
+    // TODO: replace with your form service endpoint (e.g. Formspree)
+    // fetch('https://formspree.io/f/YOUR_ID', {
+    //   method: 'POST',
+    //   headers: {'Content-Type': 'application/json'},
+    //   body: JSON.stringify(payload),
+    // });
+
+    console.log('Form payload:', payload);
+    showOk();
+    this.reset();
+  });
+})();
+</script>
+</body></html>

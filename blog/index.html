@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog: GannonHack.Club</title>
+  <link rel="stylesheet" href="../css/shared.css" />
+  <style>
+.blog-grid{max-width:1100px;margin:0 auto;padding:3rem 2rem;display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
+.blog-card{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:transform .2s,box-shadow .2s;text-decoration:none;color:inherit;display:block;}
+.blog-card:hover{transform:translateY(-4px);box-shadow:0 12px 36px rgba(0,0,0,.4);}
+.blog-thumb{height:180px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:2.5rem;border-bottom:1px solid var(--border);overflow:hidden;}
+.blog-thumb img{width:100%;height:100%;object-fit:cover;}
+.blog-body{padding:1.25rem;}
+.blog-meta{display:flex;gap:.5rem;align-items:center;margin-bottom:.75rem;}
+.blog-tag{font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent2);background:rgba(192,57,43,.15);padding:.2rem .6rem;border-radius:4px;}
+.blog-date{font-size:.75rem;color:var(--muted);}
+.blog-card h3{font-size:1rem;font-weight:700;line-height:1.4;margin-bottom:.5rem;}
+.blog-card p{font-size:.85rem;color:var(--muted);line-height:1.6;}
+</style>
+</head>
+<body>
+<canvas id="dotCanvas"></canvas>
+<nav>
+  <a href="../index.html" class="nav-logo">Gannon<span>Hack</span>.Club</a>
+  <div class="nav-links">
+    <a href="../index.html">Home</a>
+    <a href="../about/index.html">About Us</a>
+    <a href="../blog/index.html" class="active">Blog</a>
+    <a href="https://ctf.gannonhacks.club" target="_blank" rel="noopener">CTF</a>
+    <a href="../contact/index.html">Contact</a>
+  </div>
+</nav>
+<div class="page-wrap">
+  <div class="page-hero">
+    <div class="section-tag">Latest Posts</div>
+    <h1>Blog</h1>
+    <p>Writeups, tutorials, and news from the club</p>
+  </div>
+  <div class="blog-grid" id="blogGrid"></div>
+  <footer>&copy; 2025 <span>GannonHack.Club</span> &middot; Gannon University &middot; Erie, PA</footer>
+</div>
+<script src="../js/shared.js"></script>
+<script>
+  // HOW TO ADD A NEW POST:
+  //  1. Copy blog/posts/template.html to blog/posts/your-post-name.html
+  //  2. Edit the new file with your content
+  //  3. Add one line below (newest post last):
+  //     { emoji:'🔥', tag:'Writeup', date:'Mon YYYY', title:'Your Title',
+  //       desc:'One-line description.', file:'posts/your-post-name.html',
+  //       image:'../Photo/gallery/your-cover.jpeg' }   (image is optional)
+  const BLOG_POSTS = [
+    { emoji:'📝', tag:'Writeup',  date:'Jan 2023', title:'PicoCTF 2023, Web Exploitation Writeup',         desc:'Step-by-step walkthrough of web challenges including SQL injection and XSS.',          file:'posts/picoctf-2023-web.html' },
+    { emoji:'🔍', tag:'Tutorial', date:'Mar 2023', title:"Getting Started with OSINT, A Beginner's Guide", desc:'Learn how to gather public info using Shodan, ExifTool, Google Dorks, and more.',    file:'posts/osint-beginners-guide.html' },
+    { emoji:'🩹', tag:'Workshop', date:'Apr 2026', title:'BASC 2026: Vibe Coding a Backport',               desc:"Recap of John Amaral's hands-on lab on backporting CVE-2024-37370 in MIT Kerberos.", file:'posts/basc2026-backport-workshop.html', image:'../Photo/gallery/basc0.jpeg' },
+    { emoji:'🔎', tag:'Workshop', date:'Apr 2026', title:'BASC 2026: SAST Rule Writing 101 with Semgrep',   desc:'How to write custom static analysis rules for your codebase using Semgrep, taint tracking, pattern operators, and CI integration.', file:'posts/basc2026-sast-semgrep.html', image:'../Photo/gallery/semgrep0.jpg' },
+    // ↑ Add new posts above this line (newest last)
+  ];
+  const grid = document.getElementById('blogGrid');
+  BLOG_POSTS.forEach(p => {
+    const thumb = p.image ? '<img src="'+p.image+'" />' : '<span>'+p.emoji+'</span>';
+    grid.innerHTML += '<a class="blog-card" href="'+p.file+'">'
+      +'<div class="blog-thumb">'+thumb+'</div>'
+      +'<div class="blog-body"><div class="blog-meta"><span class="blog-tag">'+p.tag+'</span>'
+      +'<span class="blog-date">'+p.date+'</span></div>'
+      +'<h3>'+p.title+'</h3><p>'+p.desc+'</p></div></a>';
+  });
+</script>
+</body></html>

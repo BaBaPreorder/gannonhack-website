@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BASC 2026: Vibe Coding a Backport: GannonHack.Club</title>
+  <link rel="stylesheet" href="../../css/shared.css" />
+  <style>
+    .post-wrap{max-width:780px;margin:0 auto;padding:3rem 2rem 5rem;}
+    .post-header{margin-bottom:2.5rem;padding-bottom:2rem;border-bottom:1px solid var(--border);}
+    .post-meta{display:flex;gap:.75rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap;}
+    .post-tag{font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent2);background:rgba(192,57,43,.15);padding:.2rem .6rem;border-radius:4px;}
+    .post-date{font-size:.8rem;color:var(--muted);}
+    .post-author{font-size:.8rem;color:var(--muted);}
+    .post-title{font-size:clamp(1.8rem,4vw,2.5rem);font-weight:900;line-height:1.2;}
+    .post-cover{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:12px;margin:2rem 0;border:1px solid var(--border);}
+    .post-body{color:var(--muted);line-height:1.9;font-size:1rem;}
+    .post-body h2{font-size:1.4rem;font-weight:800;color:var(--text);margin:2.5rem 0 .75rem;padding-bottom:.5rem;border-bottom:1px solid var(--border);}
+    .post-body h3{font-size:1.1rem;font-weight:700;color:var(--gold);margin:1.75rem 0 .5rem;}
+    .post-body p{margin-bottom:1rem;}
+    .post-body a{color:var(--accent2);text-decoration:underline;}
+    .post-body code{background:var(--card);border:1px solid var(--border);padding:.15rem .45rem;border-radius:4px;font-size:.88rem;font-family:monospace;color:var(--accent2);}
+    .post-body pre{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.25rem 1.5rem;overflow-x:auto;margin:1.25rem 0;}
+    .post-body pre code{background:none;border:none;padding:0;color:#e2e8f0;font-size:.9rem;line-height:1.7;}
+    .post-body ul,ol{margin:.5rem 0 1rem 1.5rem;}
+    .post-body li{margin-bottom:.45rem;}
+    .post-body blockquote{border-left:3px solid var(--accent);padding:.75rem 1.25rem;margin:1.25rem 0;background:rgba(192,57,43,.08);border-radius:0 8px 8px 0;color:var(--text);font-style:italic;}
+    .back-btn{display:inline-flex;align-items:center;gap:.5rem;color:var(--muted);text-decoration:none;font-size:.9rem;margin-bottom:2rem;transition:color .2s;}
+    .back-btn:hover{color:var(--text);}
+    .tip-box{background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.25);border-radius:10px;padding:1rem 1.25rem;margin:1.5rem 0;}
+    .tip-box strong{color:#4ade80;}
+    .warning-box{background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.25);border-radius:10px;padding:1rem 1.25rem;margin:1.5rem 0;}
+    .warning-box strong{color:#fbbf24;}
+    .info-box{background:rgba(99,179,237,.06);border:1px solid rgba(99,179,237,.25);border-radius:10px;padding:1rem 1.25rem;margin:1.5rem 0;}
+    .info-box strong{color:#63b3ed;}
+    .phase-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.25rem;margin:.75rem 0;display:flex;gap:1rem;align-items:flex-start;}
+    .phase-num{font-size:1.4rem;font-weight:900;color:var(--gold);flex-shrink:0;min-width:2rem;}
+    .phase-title{font-weight:700;color:var(--text);font-size:.95rem;}
+    .phase-desc{font-size:.85rem;color:var(--muted);margin-top:.25rem;line-height:1.6;}
+    .speaker-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin:1.5rem 0;display:flex;gap:1.25rem;align-items:flex-start;}
+    .speaker-icon{font-size:2.5rem;flex-shrink:0;}
+    .speaker-name{font-weight:800;color:var(--text);font-size:1.05rem;}
+    .speaker-meta{font-size:.82rem;color:var(--gold);margin-top:.2rem;}
+    .speaker-bio{font-size:.88rem;color:var(--muted);margin-top:.5rem;line-height:1.6;}
+    .gallery-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.5rem 0;}
+    .gallery-row img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:10px;border:1px solid var(--border);}
+    .event-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(212,160,23,.1);border:1px solid rgba(212,160,23,.3);border-radius:8px;padding:.5rem 1rem;font-size:.8rem;color:var(--gold);font-weight:600;margin-bottom:1.5rem;}
+  </style>
+</head>
+<body>
+<canvas id="dotCanvas"></canvas>
+<nav>
+  <a href="../../index.html" class="nav-logo">Gannon<span>Hack</span>.Club</a>
+  <div class="nav-links">
+    <a href="../../index.html">Home</a>
+    <a href="../../about/index.html">About Us</a>
+    <a href="../index.html" class="active">Blog</a>
+    <a href="https://ctf.gannonhacks.club" target="_blank" rel="noopener">CTF</a>
+    <a href="../../contact/index.html">Contact</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <div class="post-wrap">
+    <a href="../index.html" class="back-btn">&#8592; Back to Blog</a>
+
+    <div class="post-header">
+      <div class="post-meta">
+        <span class="post-tag">Workshop</span>
+        <span class="post-tag" style="color:var(--gold);background:rgba(212,160,23,.12);">BASC 2026</span>
+        <span class="post-date">April 2026</span>
+        <span class="post-author">by GannonHack Team</span>
+      </div>
+      <h1 class="post-title">Vibe Coding a Backport: Deep Dive into Backported Patch Generation</h1>
+    </div>
+
+    <div class="event-badge">
+      🏛️ BASC 2026 &nbsp;·&nbsp; Morning Session &nbsp;·&nbsp; 09:30–11:30
+    </div>
+
+    <img class="post-cover" src="../../Photo/gallery/basc0.jpeg" alt="BASC 2026 Workshop" />
+
+    <div class="post-body">
+      <p>
+        At BASC 2026, our team attended one of the most hands-on sessions of the conference:
+        <em>Vibe Coding a Backport</em>, led by <strong>John Amaral</strong> from Root IO Labs.
+        Over two hours, attendees went from reading a CVE description to producing a working backported patch
+        for a real-world vulnerability, all on live systems.
+      </p>
+
+      <div class="speaker-card">
+        <div class="speaker-icon">🎤</div>
+        <div>
+          <div class="speaker-name">John Amaral</div>
+          <div class="speaker-meta">Root IO Labs, BASC 2026 Speaker</div>
+          <div class="speaker-bio">
+            Security researcher and open source contributor specializing in vulnerability remediation,
+            patch analysis, and Linux distribution security. Creator of the
+            <a href="https://github.com/Root-IO-Labs/anyone-can-patch" target="_blank" rel="noopener">anyone-can-patch</a> workshop framework.
+          </div>
+        </div>
+      </div>
+
+      <h2>What is Backporting?</h2>
+      <p>
+        When a vulnerability is discovered in a piece of software, the upstream maintainers release a fix,
+        usually for the latest version. But in the real world, most production systems are running
+        <em>older</em> versions. They can't just upgrade to the latest release without risking breaking
+        API compatibility, failing tests, or introducing regressions.
+      </p>
+      <p>
+        <strong>Backporting</strong> is the practice of taking an upstream fix and carefully adapting it
+        to work on an older codebase. It's one of the most critical, and underappreciated, skills in
+        practical security engineering. Every major Linux distribution (Red Hat, Debian, Ubuntu) relies
+        heavily on backported patches to keep legacy software secure without disrupting stability.
+      </p>
+
+      <div class="info-box">
+        <strong>📦 Why this matters:</strong> Many CNCF projects, enterprise systems, and Linux distributions
+        ship software versions that are years behind upstream. Backporting is the bridge between
+        "a fix exists" and "production is actually protected."
+      </div>
+
+      <h2>The Vulnerability: CVE-2024-37370</h2>
+      <p>
+        The workshop used <strong>CVE-2024-37370</strong> in <strong>MIT Kerberos (krb5)</strong> as its
+        case study, a real vulnerability that affects authentication infrastructure used across
+        enterprise environments and many CNCF projects.
+      </p>
+      <p>
+        The session walked through what makes a bug "CVE-worthy":
+      </p>
+      <ul>
+        <li>Impact on confidentiality, integrity, or availability</li>
+        <li>Attack vector and exploitability (network-reachable vs. local)</li>
+        <li>Affected versions and distribution in the wild</li>
+        <li>CVSS scoring methodology</li>
+      </ul>
+      <p>
+        By studying the affected code and the upstream fix side-by-side, attendees could see exactly
+        what changed and, more importantly, <em>why</em> the change was necessary.
+      </p>
+
+      <h2>Workshop Structure</h2>
+      <p>The session was broken into several hands-on phases:</p>
+
+      <div class="phase-card">
+        <div class="phase-num">1</div>
+        <div>
+          <div class="phase-title">Understand the Vulnerability</div>
+          <div class="phase-desc">Read the CVE, examine the affected code path, and trace exactly how the bug can be triggered. This phase emphasized reading code critically, not just accepting what the advisory says.</div>
+        </div>
+      </div>
+
+      <div class="phase-card">
+        <div class="phase-num">2</div>
+        <div>
+          <div class="phase-title">Study the Upstream Fix</div>
+          <div class="phase-desc">Review how the maintainers patched it in the latest version. Understand the intent of each change, a patch you don't fully understand is a patch you can't safely backport.</div>
+        </div>
+      </div>
+
+      <div class="phase-card">
+        <div class="phase-num">3</div>
+        <div>
+          <div class="phase-title">Map API and Dependency Differences</div>
+          <div class="phase-desc">Identify what changed between the upstream version and the target (older) version. Function signatures, structs, error codes, and dependencies may all differ. This is where most backports fail.</div>
+        </div>
+      </div>
+
+      <div class="phase-card">
+        <div class="phase-num">4</div>
+        <div>
+          <div class="phase-title">Adapt the Patch</div>
+          <div class="phase-desc">Rewrite or adjust the fix to work in the older codebase. Apply it, resolve conflicts, and make sure the intent of the original fix is preserved, not just the literal code.</div>
+        </div>
+      </div>
+
+      <div class="phase-card">
+        <div class="phase-num">5</div>
+        <div>
+          <div class="phase-title">Validate: Tests, Regressions, Side Effects</div>
+          <div class="phase-desc">Run existing test suites, write new targeted tests for the vulnerability, and use static analysis to hunt for unintended side effects introduced by the adaptation.</div>
+        </div>
+      </div>
+
+      <h2>Vibe Coding: More Than a Buzzword</h2>
+      <p>
+        The session title references "vibe coding", the idea of using AI-assisted tools to accelerate
+        development. John used this framing deliberately: AI tools are increasingly capable of
+        generating patches, but <em>understanding</em> whether a patch is correct still requires
+        deep human judgment.
+      </p>
+      <p>
+        The workshop demonstrated both sides: using AI to speed up initial diff analysis and patch drafting,
+        then critically reviewing the output to catch semantic errors that passed a syntax check.
+        The takeaway was clear, vibe coding is a <em>force multiplier</em>, not a replacement for
+        understanding the vulnerability.
+      </p>
+
+      <blockquote>
+        "A patch that fixes the CVE but breaks authentication for 10% of users isn't a fix, it's a different incident."
+      </blockquote>
+
+      <h2>Hands-On: Debugging Failed Patches</h2>
+      <p>
+        One of the most valuable parts of the session was intentionally broken patches. Attendees were
+        given patches that <em>almost</em> worked and had to debug:
+      </p>
+      <ul>
+        <li>Patches that applied cleanly but left the vulnerability partially exploitable</li>
+        <li>Patches that introduced a null pointer dereference in a new code path</li>
+        <li>Patches correct for the target version but broken on a closely related branch</li>
+      </ul>
+      <p>
+        This hands-on debugging experience built the kind of intuition that documentation alone can't provide.
+      </p>
+
+      <img src="../../Photo/gallery/basc2.jpeg" alt="Workshop session in progress" style="width:100%;border-radius:10px;border:1px solid var(--border);margin:1.5rem 0;" />
+
+      <h2>Tracing Risk Across Legacy Branches</h2>
+      <p>
+        Real environments don't run one version, they run a fleet. The session covered techniques for
+        tracing whether a given patch is needed across multiple legacy branches simultaneously:
+      </p>
+      <ul>
+        <li>Using <code>git log --all -S "&lt;pattern&gt;"</code> to find where vulnerable code exists across branches</li>
+        <li>Comparing symbol tables to detect function-level differences between versions</li>
+        <li>Using <code>diffoscope</code> and binary analysis to verify a patch actually changed compiled output</li>
+        <li>Checking distribution vendor patches (e.g., RHSA, DSA advisories) to learn from what others already backported</li>
+      </ul>
+
+      <h2>Key Takeaways</h2>
+
+      <div class="tip-box">
+        <strong>✅ The patch intent matters more than the patch literal.</strong> When you backport, you're not
+        copy-pasting code, you're transplanting a security invariant into a different codebase.
+      </div>
+
+      <div class="warning-box">
+        <strong>⚠️ API drift is the #1 failure mode.</strong> Most failed backports break because a helper
+        function, struct field, or error constant was renamed or refactored between versions.
+        Always diff the APIs first.
+      </div>
+
+      <div class="tip-box">
+        <strong>✅ Test suites don't prove correctness, they reduce risk.</strong> The workshop emphasized
+        writing vulnerability-specific tests that prove the exploit path is actually closed,
+        not just that existing functionality still passes.
+      </div>
+
+      <img src="../../Photo/gallery/basc3.jpeg" alt="BASC 2026 team" style="width:100%;border-radius:10px;border:1px solid var(--border);margin:1.5rem 0;" />
+
+      <h2>Try It Yourself</h2>
+      <p>
+        The entire workshop is open source and self-guided. John released the full lab materials,
+        including the broken patches and guided exercises, on GitHub:
+      </p>
+      <ul>
+        <li>
+          <a href="https://github.com/Root-IO-Labs/anyone-can-patch" target="_blank" rel="noopener">
+            github.com/Root-IO-Labs/anyone-can-patch ↗
+          </a>
+        </li>
+      </ul>
+      <p>
+        The repo includes setup instructions, the CVE-2024-37370 case study, intentionally broken patches
+        to debug, and guidance for exploring additional legacy branches. Whether you're new to patch
+        analysis or a seasoned maintainer, it's worth working through.
+      </p>
+
+      <blockquote>
+        Backporting isn't glamorous, but it's how production systems actually get protected.
+        Every distribution maintainer, every SRE with a legacy fleet, and every security engineer
+        who has to say "we can't upgrade" needs this skill.
+      </blockquote>
+    </div>
+  </div>
+  <footer>&copy; 2025 <span>GannonHack.Club</span> &middot; Gannon University &middot; Erie, PA</footer>
+</div>
+
+<script src="../../js/shared.js"></script>
+</body>
+</html>

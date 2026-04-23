@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Getting Started with OSINT: GannonHack.Club</title>
+  <link rel="stylesheet" href="../../css/shared.css" />
+  <style>
+    .post-wrap{max-width:780px;margin:0 auto;padding:3rem 2rem 5rem;}
+    .post-header{margin-bottom:2.5rem;padding-bottom:2rem;border-bottom:1px solid var(--border);}
+    .post-meta{display:flex;gap:.75rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap;}
+    .post-tag{font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent2);background:rgba(192,57,43,.15);padding:.2rem .6rem;border-radius:4px;}
+    .post-date{font-size:.8rem;color:var(--muted);}
+    .post-author{font-size:.8rem;color:var(--muted);}
+    .post-title{font-size:clamp(1.8rem,4vw,2.5rem);font-weight:900;line-height:1.2;}
+    .post-cover{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:12px;margin:2rem 0;border:1px solid var(--border);}
+    .post-body{color:var(--muted);line-height:1.9;font-size:1rem;}
+    .post-body h2{font-size:1.4rem;font-weight:800;color:var(--text);margin:2.5rem 0 .75rem;padding-bottom:.5rem;border-bottom:1px solid var(--border);}
+    .post-body h3{font-size:1.1rem;font-weight:700;color:var(--gold);margin:1.75rem 0 .5rem;}
+    .post-body p{margin-bottom:1rem;}
+    .post-body a{color:var(--accent2);text-decoration:underline;}
+    .post-body code{background:var(--card);border:1px solid var(--border);padding:.15rem .45rem;border-radius:4px;font-size:.88rem;font-family:monospace;color:var(--accent2);}
+    .post-body pre{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.25rem 1.5rem;overflow-x:auto;margin:1.25rem 0;}
+    .post-body pre code{background:none;border:none;padding:0;color:#e2e8f0;font-size:.9rem;line-height:1.7;}
+    .post-body ul,ol{margin:.5rem 0 1rem 1.5rem;}
+    .post-body li{margin-bottom:.45rem;}
+    .post-body blockquote{border-left:3px solid var(--accent);padding:.75rem 1.25rem;margin:1.25rem 0;background:rgba(192,57,43,.08);border-radius:0 8px 8px 0;color:var(--text);font-style:italic;}
+    .tool-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.25rem;margin:.75rem 0;display:flex;gap:1rem;align-items:flex-start;}
+    .tool-icon{font-size:1.5rem;flex-shrink:0;margin-top:.1rem;}
+    .tool-name{font-weight:700;color:var(--text);font-size:.95rem;}
+    .tool-desc{font-size:.85rem;color:var(--muted);margin-top:.2rem;line-height:1.5;}
+    .tool-link{font-size:.75rem;color:var(--accent2);text-decoration:none;display:inline-block;margin-top:.4rem;}
+    .back-btn{display:inline-flex;align-items:center;gap:.5rem;color:var(--muted);text-decoration:none;font-size:.9rem;margin-bottom:2rem;transition:color .2s;}
+    .back-btn:hover{color:var(--text);}
+    .tip-box{background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.25);border-radius:10px;padding:1rem 1.25rem;margin:1.5rem 0;}
+    .tip-box strong{color:#4ade80;}
+    .warning-box{background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.25);border-radius:10px;padding:1rem 1.25rem;margin:1.5rem 0;}
+    .warning-box strong{color:#fbbf24;}
+  </style>
+</head>
+<body>
+<canvas id="dotCanvas"></canvas>
+<nav>
+  <a href="../../index.html" class="nav-logo">Gannon<span>Hack</span>.Club</a>
+  <div class="nav-links">
+    <a href="../../index.html">Home</a>
+    <a href="../../about/index.html">About Us</a>
+    <a href="../index.html" class="active">Blog</a>
+    <a href="https://ctf.gannonhacks.club" target="_blank" rel="noopener">CTF</a>
+    <a href="../../contact/index.html">Contact</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <div class="post-wrap">
+    <a href="../index.html" class="back-btn">&#8592; Back to Blog</a>
+
+    <div class="post-header">
+      <div class="post-meta">
+        <span class="post-tag">Tutorial</span>
+        <span class="post-date">March 2023</span>
+        <span class="post-author">by GannonHack Team</span>
+      </div>
+      <h1 class="post-title">Getting Started with OSINT: A Beginner's Guide</h1>
+    </div>
+
+    <img class="post-cover" src="../../Photo/gallery/5.jpeg" alt="OSINT Guide Cover" />
+
+    <div class="post-body">
+      <p>
+        Open Source Intelligence (OSINT) is the practice of collecting and analyzing publicly available information
+        to produce actionable intelligence. In CTF competitions, OSINT challenges test your ability to find
+        information that's hiding in plain sight, no hacking required, just clever searching.
+      </p>
+
+      <div class="tip-box">
+        <strong>💡 Good news:</strong> OSINT is one of the most beginner-friendly CTF categories.
+        You don't need to write any code, just know where to look.
+      </div>
+
+      <div class="warning-box">
+        <strong>⚠️ Ethics first:</strong> OSINT skills must only be used on yourself, with explicit permission,
+        or in authorized CTF/research contexts. Never use these techniques to stalk or harm others.
+      </div>
+
+      <h2>What is OSINT?</h2>
+      <p>
+        OSINT draws from publicly accessible sources: websites, social media, public records, DNS data,
+        image metadata, and more. The goal is to piece together information that people didn't realize was public.
+      </p>
+      <p>
+        In CTF competitions, OSINT challenges might ask you to find a person's location from a photo,
+        identify a building from a street view screenshot, or track down an account across platforms using a username.
+      </p>
+
+      <h2>Essential OSINT Tools</h2>
+
+      <div class="tool-card">
+        <div class="tool-icon">🔍</div>
+        <div>
+          <div class="tool-name">Google Dorking</div>
+          <div class="tool-desc">Advanced Google search operators to find specific file types, exposed directories, login pages, and more. No extra software needed.</div>
+          <div style="margin-top:.5rem;font-size:.85rem;color:var(--muted);">Example: <code>site:gannon.edu filetype:pdf "confidential"</code></div>
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-icon">🌐</div>
+        <div>
+          <div class="tool-name">Shodan</div>
+          <div class="tool-desc">The "search engine for the Internet of Things." Finds internet-connected devices, open ports, running services, and default credentials.</div>
+          <a class="tool-link" href="https://shodan.io" target="_blank">shodan.io ↗</a>
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-icon">📸</div>
+        <div>
+          <div class="tool-name">ExifTool</div>
+          <div class="tool-desc">Extracts hidden metadata from images and files, GPS coordinates, camera model, timestamps, author info, and more.</div>
+          <div style="margin-top:.5rem;font-size:.85rem;color:var(--muted);">Install: <code>sudo apt install exiftool</code></div>
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-icon">👤</div>
+        <div>
+          <div class="tool-name">Sherlock</div>
+          <div class="tool-desc">Searches 300+ social media platforms for a given username simultaneously. Great for tracking down accounts across the web.</div>
+          <div style="margin-top:.5rem;font-size:.85rem;color:var(--muted);">Usage: <code>python3 sherlock.py username</code></div>
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-icon">🗺️</div>
+        <div>
+          <div class="tool-name">Google Maps / Street View</div>
+          <div class="tool-desc">For GeoINT challenges, identifying locations from photos by matching landmarks, street signs, shadows, or architecture styles.</div>
+        </div>
+      </div>
+
+      <h2>Step-by-Step: Solving an OSINT CTF Challenge</h2>
+
+      <h3>Example Challenge</h3>
+      <p>You're given a photo of a person standing in front of a building and asked: <em>"What city was this taken in?"</em></p>
+
+      <h3>Step 1: Extract Metadata</h3>
+      <pre><code>$ exiftool challenge.jpg
+GPS Latitude  : 41° 50' 57.60" N
+GPS Longitude : 80° 6' 57.60" W</code></pre>
+      <p>If GPS data exists in the EXIF, you're done. Plug the coordinates into Google Maps.</p>
+
+      <h3>Step 2: Reverse Image Search</h3>
+      <p>If no metadata, drag the image into Google Images or <a href="https://yandex.com/images" target="_blank">Yandex Images</a> (often better for buildings). Look for matching results that reveal the location.</p>
+
+      <h3>Step 3: Identify Visual Clues</h3>
+      <p>Look for:</p>
+      <ul>
+        <li>Street signs, bus numbers, or license plates</li>
+        <li>Unique architectural features or landmarks</li>
+        <li>Language on storefronts or posters</li>
+        <li>Sun position to estimate time of day and hemisphere</li>
+        <li>Vegetation types for climate hints</li>
+      </ul>
+
+      <h3>Step 4: Cross-reference on Maps</h3>
+      <p>Use Google Street View to walk around suspected locations until the view matches the photo.</p>
+
+      <h2>Useful Google Dork Operators</h2>
+
+      <pre><code>site:example.com         , limit results to a domain
+filetype:pdf             , find specific file types
+inurl:admin              , find admin panels
+intitle:"index of"       , find open directories
+"confidential" site:.gov , find leaked docs on .gov sites
+cache:example.com        , view Google's cached version</code></pre>
+
+      <h2>Practice Resources</h2>
+      <ul>
+        <li><strong>PicoCTF</strong>, beginner CTF with many OSINT challenges</li>
+        <li><strong>GeoGuessr</strong>, builds your visual location identification skills</li>
+        <li><strong>Bellingcat Online Investigation Toolkit</strong>, professional OSINT resources</li>
+        <li><strong>TryHackMe</strong>, has dedicated OSINT learning paths</li>
+      </ul>
+
+      <blockquote>
+        OSINT is less about tools and more about mindset. Train yourself to ask: "What else is publicly available about this?", and you'll be surprised how much you can find.
+      </blockquote>
+    </div>
+  </div>
+  <footer>&copy; 2025 <span>GannonHack.Club</span> &middot; Gannon University &middot; Erie, PA</footer>
+</div>
+
+<script src="../../js/shared.js"></script>
+</body>
+</html>
