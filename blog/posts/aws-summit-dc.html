@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>From the Halls of Gannon to the AWS Summit: GannonHack.Club</title>
+  <link rel="icon" href="../../Photo/gannon-golden-knights-logo.png" type="image/png" />
+  <link rel="stylesheet" href="../../css/shared.css" />
+  <style>
+    .post-wrap{max-width:780px;margin:0 auto;padding:3rem 2rem 5rem;}
+    .post-header{margin-bottom:2.5rem;padding-bottom:2rem;border-bottom:1px solid var(--border);}
+    .post-meta{display:flex;gap:.75rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap;}
+    .post-tag{font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent2);background:rgba(192,57,43,.15);padding:.2rem .6rem;border-radius:4px;}
+    .post-date{font-size:.8rem;color:var(--muted);}
+    .post-author{font-size:.8rem;color:var(--muted);}
+    .post-title{font-size:clamp(1.8rem,4vw,2.5rem);font-weight:900;line-height:1.2;}
+    /* Cover photo: constrained width, fixed 16:9 ratio, centered */
+    .post-cover{display:block;width:100%;max-width:600px;aspect-ratio:16/9;object-fit:cover;border-radius:12px;margin:2rem auto;border:1px solid var(--border);}
+    .post-body{color:var(--muted);line-height:1.9;font-size:1rem;}
+    .post-body h2{font-size:1.4rem;font-weight:800;color:var(--text);margin:2.5rem 0 .75rem;padding-bottom:.5rem;border-bottom:1px solid var(--border);}
+    .post-body h3{font-size:1.1rem;font-weight:700;color:var(--gold);margin:1.75rem 0 .5rem;}
+    .post-body p{margin-bottom:1rem;}
+    .post-body a{color:var(--accent2);text-decoration:underline;}
+    .post-body code{background:var(--card);border:1px solid var(--border);padding:.15rem .45rem;border-radius:4px;font-size:.88rem;font-family:monospace;color:var(--accent2);}
+    .post-body pre{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.25rem 1.5rem;overflow-x:auto;margin:1.25rem 0;}
+    .post-body pre code{background:none;border:none;padding:0;color:#e2e8f0;font-size:.9rem;line-height:1.7;}
+    .post-body ul,ol{margin:.5rem 0 1rem 1.5rem;}
+    .post-body li{margin-bottom:.45rem;}
+    .post-body blockquote{border-left:3px solid var(--accent);padding:.75rem 1.25rem;margin:1.25rem 0;background:rgba(192,57,43,.08);border-radius:0 8px 8px 0;color:var(--text);font-style:italic;}
+    .back-btn{display:inline-flex;align-items:center;gap:.5rem;color:var(--muted);text-decoration:none;font-size:.9rem;margin-bottom:2rem;transition:color .2s;}
+    .back-btn:hover{color:var(--text);}
+    .tip-box{background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.25);border-radius:10px;padding:1rem 1.25rem;margin:1.5rem 0;}
+    .tip-box strong{color:#4ade80;}
+    .warning-box{background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.25);border-radius:10px;padding:1rem 1.25rem;margin:1.5rem 0;}
+    .warning-box strong{color:#fbbf24;}
+    .flag-box{background:rgba(212,160,23,.08);border:1px solid rgba(212,160,23,.3);border-radius:10px;padding:1rem 1.25rem;margin:1.5rem 0;display:flex;align-items:center;gap:.75rem;}
+    .flag-box .flag-label{font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold);white-space:nowrap;}
+    .flag-box code{background:none;border:none;color:var(--gold);font-size:.95rem;}
+    /* In-body images: same constrained size as cover, so every photo in the post is uniform */
+    .post-body figure{margin:1.75rem auto;max-width:600px;}
+    .post-body figure img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:12px;border:1px solid var(--border);display:block;}
+    .post-body figcaption{font-size:.8rem;color:var(--muted);text-align:center;margin-top:.5rem;font-style:italic;}
+  </style>
+</head>
+<body>
+<canvas id="dotCanvas"></canvas>
+<nav>
+  <a href="../../index.html" class="nav-logo">Gannon<span>Hack</span>.Club</a>
+  <div class="nav-links">
+    <a href="../../index.html">Home</a>
+    <a href="../../about/index.html">About Us</a>
+    <a href="../index.html" class="active">Blog</a>
+    <a href="https://ctf.gannonhacks.club" target="_blank" rel="noopener">CTF</a>
+    <a href="../../contact/index.html">Contact</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <div class="post-wrap">
+    <a href="../index.html" class="back-btn">&#8592; Back to Blog</a>
+
+    <div class="post-header">
+      <div class="post-meta">
+        <span class="post-tag">News</span>
+        <span class="post-date">Jul 2026</span>
+        <span class="post-author">by Abraham Klogo</span>
+      </div>
+      <h1 class="post-title">From the Halls of Gannon to the AWS Summit</h1>
+    </div>
+
+    <img class="post-cover" src="../../Photo/gallery/aws3.jpg" alt="AWS Summit Washington D.C., Walter E. Washington Convention Center" />
+
+    <div class="post-body">
+
+      <p>
+        Earlier this summer, I had the opportunity to attend the <strong>AWS Summit in Washington, D.C.</strong>,
+        a two-day event held at the Walter E. Washington Convention Center that brought together builders,
+        security practitioners, and cloud leaders from across the public and private sectors. As someone whose
+        interests keep pulling toward the intersection of AI and cloud security, I couldn't have asked for
+        better timing. I wanted to share some highlights with the club, both as a recap for those who couldn't
+        make it and as motivation for anyone thinking about attending a summit like this in the future.
+      </p>
+
+      <figure>
+        <img src="../../Photo/gallery/AWS-Summit.jpg" alt="Walter E. Washington Convention Center entrance" />
+        <figcaption>Walter E. Washington Convention Center, home of AWS Summit D.C.</figcaption>
+      </figure>
+
+      <h2>Setting the Stage: Secure, Agentic AI for the Public Sector</h2>
+      <p>
+        The keynote, delivered by Dave Levy, centered on how AWS is powering secure, agentic AI for public
+        sector missions. It reshaped how I think about the relationship between AI, security, and
+        mission-driven work. Rather than treating AI as a bolt-on feature, the organizations presenting were
+        building it into the core of how they operate, with security and governance baked in from the start
+        rather than added after the fact.
+      </p>
+
+      <figure>
+        <img src="../../Photo/gallery/Davelevy.jpg" alt="Dave Levy keynote at AWS Summit D.C." />
+        <figcaption>Dave Levy's keynote on secure, agentic AI for the public sector.</figcaption>
+      </figure>
+
+      <h2>A Firehose of Real-World Sessions</h2>
+      <p>
+        With over 350 sessions running across the two days, the sheer scale of the event made one thing clear:
+        agentic and generative AI are no longer proof-of-concept experiments. Organization after organization
+        walked through how they're putting these systems into production today, from automating workflows to
+        strengthening threat detection pipelines. For a cybersecurity student, watching that shift happen in
+        real time was as much a lesson in engineering discipline as it was in AI itself.
+      </p>
+
+      <figure>
+        <img src="../../Photo/gallery/aws2.jpg" alt="Breakout session at AWS Summit D.C." />
+        <figcaption>One of 350+ sessions on the AWS Summit agenda.</figcaption>
+      </figure>
+
+      <h2>Connecting with the Gannon Community</h2>
+      <p>
+        One of the most rewarding parts of the trip had nothing to do with the sessions. I got to reconnect
+        with fellow Gannon alumni, Tinashe Katsande, Max V., and Kevin Paton, who are now out in the industry
+        doing great work. Sharing those two days with people who walked the same halls I did is what turned a
+        great event into a memorable one. It's a good reminder that the Gannon network extends well beyond
+        campus, and that showing up to events like this is as much about who you meet as what you learn.
+      </p>
+
+      <figure>
+        <img src="../../Photo/gallery/aws4.jpg" alt="Gannon University alumni at AWS Summit D.C." />
+        <figcaption>Reconnecting with Gannon alumni Tinashe Katsande, Max V., and Kevin Paton.</figcaption>
+      </figure>
+
+      <h2>Why This Matters for the Club</h2>
+      <p>
+        Every session I sat in gave me another reason to keep pushing toward the goals I've set for myself in
+        cloud security, and I'd encourage every member of Gannon Hacks to think about attending an event like
+        this at least once before you graduate. Conferences like the AWS Summit are where the theory we cover
+        in the classroom meets the scale and speed of how the industry is actually operating. If you're on the
+        fence about applying for funding to attend a conference, my advice is simple: do it. The sessions are
+        valuable, but the connections you walk away with are worth just as much.
+      </p>
+
+      <blockquote>
+        Every session I sat in added another reason to keep pushing toward it.
+      </blockquote>
+
+    </div>
+  </div>
+  <footer>&copy; 2025 <span>GannonHack.Club</span> &middot; Gannon University &middot; Erie, PA</footer>
+</div>
+
+<script src="../../js/shared.js"></script>
+</body>
+</html>
