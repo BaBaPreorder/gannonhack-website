@@ -206,13 +206,18 @@
   // Blog carousel
   function scrollBlog(d) { document.getElementById('blogCarousel').scrollBy({left:d*340,behavior:'smooth'}); }
 
-  // Blog posts, only list posts that actually exist as HTML files.
-  // To add a new post: copy blog/posts/template.html, write your content,
-  // then add an entry here AND in blog/index.html BLOG_POSTS array.
+  // Blog posts, newest first. Only list posts that actually exist as HTML files.
+  // Paths here are relative to the SITE ROOT (this file), so they start with
+  // "blog/posts/..." and "Photo/..." with NO leading "../".
+  // To add a new post: write blog/posts/your-post.html, add an entry at the TOP
+  // of this array, AND add a matching entry in blog/index.html BLOG_POSTS
+  // (paths there need the "../" prefix).
   const BLOG_PREVIEW = [
-    { emoji:'🎪', tag:'News',     date:'Aug 2026', title:'IgKnight Fair 2026 - Welcome to Gannon Hacks Cyber Club Freshmen!', desc:"What we told everyone at the table, and why you don't need experience to join.", href:'blog/posts/igknight-fair-2026-recap.html',   image:'Photo/gallery/igknight2.jpeg' },
-    { emoji:'☁️', tag:'News',     date:'Jul 2026', title:'From the Halls of Gannon to the AWS Summit',      desc:"A recap of AWS Summit D.C., Dave Levy's keynote on agentic AI, and reconnecting with Gannon alumni.", href:'blog/posts/aws-summit-dc.html',              image:'Photo/gallery/aws3.jpg' },
-    { emoji:'🩹', tag:'Workshop', date:'Apr 2026', title:'BASC 2026: Vibe Coding a Backport',               desc:"Recap of John Amaral's hands-on lab on backporting CVE-2024-37370 in MIT Kerberos.", href:'blog/posts/basc2026-backport-workshop.html', image:'Photo/gallery/basc0.jpeg' },
+    { emoji:'🎪', tag:'News',     date:'Aug 2026', title:'IgKnight Fair 2026 - Welcome to Gannon Hacks Cyber Club Freshmen!', desc:"What we told everyone at the table, and why you don't need experience to join.",                    href:'blog/posts/igknight-fair-2026-recap.html',   image:'Photo/gallery/igknight2.jpeg' },
+    { emoji:'☁️', tag:'News',     date:'Jul 2026', title:'From the Halls of Gannon to the AWS Summit',                        desc:"A recap of AWS Summit D.C., Dave Levy's keynote on agentic AI, and reconnecting with Gannon alumni.", href:'blog/posts/aws-summit-dc.html',              image:'Photo/gallery/aws3.jpg' },
+    { emoji:'🩹', tag:'Workshop', date:'Apr 2026', title:'BASC 2026: Vibe Coding a Backport',                                 desc:"Recap of John Amaral's hands-on lab on backporting CVE-2024-37370 in MIT Kerberos.",                 href:'blog/posts/basc2026-backport-workshop.html', image:'Photo/gallery/basc0.jpeg' },
+    { emoji:'🔎', tag:'Workshop', date:'Apr 2026', title:'BASC 2026: SAST Rule Writing 101 with Semgrep',                     desc:'Write custom static analysis rules for your codebase, taint tracking, pattern operators, CI integration.', href:'blog/posts/basc2026-sast-semgrep.html',  image:'Photo/gallery/semgrep0.jpg' },
+    { emoji:'📝', tag:'Writeup',  date:'Jan 2023', title:'PicoCTF 2023, Web Exploitation Writeup',                            desc:'Step-by-step walkthrough of web challenges including SQLi and XSS.',                                 href:'blog/posts/picoctf-2023-web.html',           image:'Photo/gallery/4.jpeg' },
   ];
   const bc = document.getElementById('blogCarousel');
   BLOG_PREVIEW.forEach(p => {
