@@ -1,3 +1,6 @@
+Here's the full file — copy everything below and paste it into your `blog/index.html`:
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,22 +48,28 @@
 <script>
   // HOW TO ADD A NEW POST:
   //  1. Copy blog/posts/template.html to blog/posts/your-post-name.html
-  //  2. Edit the new file with your contentgit
-  //  3. Add one line below (newest post last):
+  //  2. Edit the new file with your content
+  //  3. Add one line below (newest post first):
   //     { emoji:'🔥', tag:'Writeup', date:'Mon YYYY', title:'Your Title',
   //       desc:'One-line description.', file:'posts/your-post-name.html',
   //       image:'../Photo/gallery/your-cover.jpeg' }   (image is optional)
-  
+
   const BLOG_POSTS = [
-    // Add new posts below this line (newest last)
     { emoji:'🎪', tag:'News',     date:'Aug 2026', title:'IgKnight Fair 2026 - Welcome to Gannon Hacks Cyber Club Freshmen!', desc:"What we told everyone at the table, what freshmen asked about most, and why you don't need experience to join.", file:'posts/igknight-fair-2026-recap.html', image:'../Photo/gallery/igknight2.jpeg' },
     { emoji:'☁️', tag:'News',     date:'Jul 2026', title:'From the Halls of Gannon to the AWS Summit',      desc:"A recap of AWS Summit D.C., Dave Levy's keynote on agentic AI, and reconnecting with Gannon alumni.", file:'posts/aws-summit-dc.html', image:'../Photo/gallery/aws3.jpg' },
+    { emoji:'🏙️', tag:'News',     date:'Jul 2026', title:'Gannon Hacks Attend Erie Summit',                  desc:'AI, Zero Trust, and cyber resilience: takeaways from the FRC Erie Summit at the Bayfront Convention Center.', file:'posts/frc-erie-summit.html' },
+    { emoji:'🏥', tag:'News',     date:'Jun 2026', title:'Securing Tomorrow: A Day at the HIMSS Cybersecurity & AI Summit', desc:'Keynotes on adversarial AI, a healthcare ransomware tabletop exercise, and a CISO panel on AI in the SOC.', file:'posts/himss-ai-summit.html' },
+    { emoji:'🎓', tag:'Outreach', date:'Jun 2026', title:'Inspiring the Next Generation of Cybersecurity Professionals', desc:'Welcoming a group of high school students to the department for a hands-on look at cybersecurity careers.', file:'posts/high-school-outreach.html' },
+    { emoji:'🤝', tag:'News',     date:'May 2026', title:'Handing Over and Farewell Ceremony',               desc:'Bidding farewell to outgoing President Pong and welcoming in new club leadership.', file:'posts/handover-farewell-ceremony.html' },
+    { emoji:'🏆', tag:'News',     date:'May 2026', title:'Gannon Hacks Cyber Club Adjudged Best New Club at Awards Ceremony', desc:"A look back at the research, competitions, and conferences behind the club's Best New Club win.", file:'posts/beyond-the-classroom.html' },
+    { emoji:'🛡️', tag:'News',     date:'Apr 2026', title:'OWASP AppSec Boston: Connecting With the Industry Experts', desc:'Three tracks, industry conversations, and a trip to the MIT and Boston University campuses.', file:'posts/owasp-appsec-boston.html' },
     { emoji:'🩹', tag:'Workshop', date:'Apr 2026', title:'BASC 2026: Vibe Coding a Backport',               desc:"Recap of John Amaral's hands-on lab on backporting CVE-2024-37370 in MIT Kerberos.", file:'posts/basc2026-backport-workshop.html', image:'../Photo/gallery/basc0.jpeg' },
     { emoji:'🔎', tag:'Workshop', date:'Apr 2026', title:'BASC 2026: SAST Rule Writing 101 with Semgrep',   desc:'How to write custom static analysis rules for your codebase using Semgrep, taint tracking, pattern operators, and CI integration.', file:'posts/basc2026-sast-semgrep.html', image:'../Photo/gallery/semgrep0.jpg' },
     { emoji:'🔎', tag:'Workshop', date:'Apr 2026', title:'Example',                                         desc:'Gannonhacks testing', file:'posts/template copy.html', image:'../Photo/gallery/4.jpeg' },
+    { emoji:'🚩', tag:'CTF',      date:'Mar 2026', title:'Gannon Hacks Places Fourth at BSidesROC 2026',    desc:'A fourth-place CTF finish among 20+ teams at BSidesROC 2026 in Rochester, New York.', file:'posts/bsidesroc-2026.html' },
     { emoji:'🔍', tag:'Tutorial', date:'Mar 2023', title:"Getting Started with OSINT, A Beginner's Guide",  desc:'Learn how to gather public info using Shodan, ExifTool, Google Dorks, and more.', file:'posts/osint-beginners-guide.html' },
     { emoji:'📝', tag:'Writeup',  date:'Jan 2023', title:'PicoCTF 2023, Web Exploitation Writeup',          desc:'Step-by-step walkthrough of web challenges including SQL injection and XSS.', file:'posts/picoctf-2023-web.html' },
-    
+
   ];
   const grid = document.getElementById('blogGrid');
   BLOG_POSTS.forEach(p => {
