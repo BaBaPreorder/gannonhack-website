@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Building Cybersecurity Skills: Another Hands-On Gannon Hacks Session: GannonHack.Club</title>
+  <link rel="icon" href="../../Photo/gannon-golden-knights-logo.png" type="image/png" />
+  <link rel="stylesheet" href="../../css/shared.css" />
+  <style>
+    .post-wrap{max-width:780px;margin:0 auto;padding:3rem 2rem 5rem;}
+    .post-header{margin-bottom:2.5rem;padding-bottom:2rem;border-bottom:1px solid var(--border);}
+    .post-meta{display:flex;gap:.75rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap;}
+    .post-tag{font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent2);background:rgba(192,57,43,.15);padding:.2rem .6rem;border-radius:4px;}
+    .post-date{font-size:.8rem;color:var(--muted);}
+    .post-author{font-size:.8rem;color:var(--muted);}
+    .post-title{font-size:clamp(1.8rem,4vw,2.5rem);font-weight:900;line-height:1.2;}
+    .post-cover{display:block;width:100%;max-width:600px;aspect-ratio:16/9;object-fit:cover;border-radius:12px;margin:2rem auto;border:1px solid var(--border);}
+    .post-body{color:var(--muted);line-height:1.9;font-size:1rem;}
+    .post-body h2{font-size:1.4rem;font-weight:800;color:var(--text);margin:2.5rem 0 .75rem;padding-bottom:.5rem;border-bottom:1px solid var(--border);}
+    .post-body p{margin-bottom:1rem;}
+    .post-body a{color:var(--accent2);text-decoration:underline;}
+    .post-body code{background:var(--card);border:1px solid var(--border);padding:.15rem .45rem;border-radius:4px;font-size:.88rem;font-family:monospace;color:var(--accent2);}
+    .post-body ul,ol{margin:.5rem 0 1rem 1.5rem;}
+    .post-body li{margin-bottom:.45rem;}
+    .post-body blockquote{border-left:3px solid var(--accent);padding:.75rem 1.25rem;margin:1.25rem 0;background:rgba(192,57,43,.08);border-radius:0 8px 8px 0;color:var(--text);font-style:italic;}
+    .back-btn{display:inline-flex;align-items:center;gap:.5rem;color:var(--muted);text-decoration:none;font-size:.9rem;margin-bottom:2rem;transition:color .2s;}
+    .back-btn:hover{color:var(--text);}
+    .tip-box{background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.25);border-radius:10px;padding:1rem 1.25rem;margin:1.5rem 0;}
+    .tip-box strong{color:#4ade80;}
+    .post-body figure{margin:1.75rem auto;max-width:600px;}
+    .post-body figure img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:12px;border:1px solid var(--border);display:block;}
+    .post-body figcaption{font-size:.8rem;color:var(--muted);text-align:center;margin-top:.5rem;font-style:italic;}
+  </style>
+</head>
+<body>
+<canvas id="dotCanvas"></canvas>
+<nav>
+  <a href="../../index.html" class="nav-logo">Gannon<span>Hack</span>.Club</a>
+  <div class="nav-links">
+    <a href="../../index.html">Home</a>
+    <a href="../../about/index.html">About Us</a>
+    <a href="../index.html" class="active">Blog</a>
+    <a href="https://ctf.gannonhacks.club" target="_blank" rel="noopener">CTF</a>
+    <a href="../../contact/index.html">Contact</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <div class="post-wrap">
+    <a href="../index.html" class="back-btn">&#8592; Back to Blog</a>
+
+    <div class="post-header">
+      <div class="post-meta">
+        <span class="post-tag">Workshop</span>
+        <span class="post-date">Sep 2026</span>
+        <span class="post-author">Gannon Hacks Cyber Club</span>
+      </div>
+      <h1 class="post-title">Building Cybersecurity Skills: Another Hands-On Gannon Hacks Session</h1>
+    </div>
+
+    <!-- COVER PHOTO: members working through the TryHackMe challenge together -->
+    <img class="post-cover" src="../../Photo/gallery/Meeting2.jpg" alt="Gannon Hacks members working through a TryHackMe challenge" />
+
+    <div class="post-body">
+
+      <p>
+        Another great hands-on session with the Gannon Hacks Cyber Club! This week, members explored several
+        fundamental cybersecurity concepts while working through a practical TryHackMe challenge. The goal
+        wasn't simply to complete the challenge, but to understand the technologies, commands, and security
+        concepts behind each step.
+      </p>
+
+      <h2>Learning the Fundamentals</h2>
+      <p>
+        Throughout the session, we discussed and researched a wide range of topics that every cybersecurity
+        student should understand. Members explored different Linux distributions and became more familiar
+        with working in Linux environments. We also reviewed firewalls, common network ports, the OSI model,
+        intranets, and the importance of Multi-Factor Authentication (MFA) as an additional layer of security.
+      </p>
+      <p>
+        Rather than simply providing commands to complete the challenge, students were encouraged to research
+        unfamiliar commands and understand what each one was actually doing.
+      </p>
+
+      <!-- PHOTO: members researching commands, whiteboard notes, or terminal screenshots -->
+      
+      <figure>
+        <img src="../../Photo/gallery/Meeting1.jpg" alt="Gannon Hacks members reviewing Linux and networking fundamentals" />
+        <figcaption>Working through Linux fundamentals, firewalls, and the OSI model together.</figcaption>
+      </figure>
+      
+
+
+      <h2>From Concepts to Hands-On Practice</h2>
+      <p>
+        One of the main goals of Gannon Hacks is to connect cybersecurity theory with practical experience.
+        During the TryHackMe activity, members encountered tools and techniques commonly used in cybersecurity
+        labs, including Hydra and John the Ripper. These tools provided an opportunity to discuss password
+        security, authentication, password auditing, and why weak credentials continue to represent a major
+        security risk.
+      </p>
+      <p>
+        The session also generated discussions about how networking, operating systems, authentication, and
+        security tools work together during both offensive and defensive cybersecurity activities.
+      </p>
+
+      <!-- PHOTO: members working with Hydra/John the Ripper, or screen-share of the TryHackMe room -->
+      <figure>
+        <img src="../../Photo/gallery/Meeting4.JPG" alt="Gannon Hacks members working through the TryHackMe challenge" />
+        <figcaption>Putting password security and authentication concepts into practice.</figcaption>
+      </figure>
+
+      <!-- PHOTO: a second shot from the hands-on practice portion of the session -->
+      <!--
+      <figure>
+        <img src="../../Photo/gallery/thm-session-practice2.jpg" alt="Gannon Hacks members working through the hands-on challenge" />
+        <figcaption>More hands-on work during the TryHackMe challenge.</figcaption>
+      </figure>
+      -->
+
+      <h2>Learning by Doing</h2>
+      <p>
+        Cybersecurity includes a large number of tools, commands, protocols, and technologies, and nobody is
+        expected to know all of them from memory. An important part of the session was learning how to
+        investigate a problem, research a command, test an idea, and understand the results. That process is
+        one of the skills we want members to develop through Gannon Hacks.
+      </p>
+
+      <!-- PHOTO: members troubleshooting together, or a wrap-up shot of the group -->
+      
+      <figure>
+        <img src="../../Photo/gallery/Meeting3.JPG" alt="Gannon Hacks members troubleshooting and researching commands together" />
+        <figcaption>Investigating, testing, and researching, one command at a time.</figcaption>
+      </figure>
+      
+
+    
+
+      <div class="tip-box">
+        <strong>Get Ready for Next Week:</strong> we'll continue building on these concepts with additional
+        hands-on activities. If you plan to participate, please make sure you have Kali Linux installed and
+        working on your own system before the next session. Having your own environment ready will allow you
+        to follow the exercises, experiment with the tools, and complete the challenges alongside the rest of
+        the group.
+      </div>
+
+      <p>
+        New members are always welcome, regardless of previous cybersecurity experience. Come ready to learn,
+        experiment, ask questions, and break things ethically.
+      </p>
+
+      <blockquote>
+        Learn. Compete. Build. Break things ethically. &mdash; Gannon Hacks Cyber Club, Gannon University
+      </blockquote>
+
+    </div>
+  </div>
+  <footer>&copy; 2025 <span>GannonHack.Club</span> &middot; Gannon University &middot; Erie, PA</footer>
+</div>
+
+<script src="../../js/shared.js"></script>
+</body>
+</html>
