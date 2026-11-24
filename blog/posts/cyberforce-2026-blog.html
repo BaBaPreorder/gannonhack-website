@@ -3,110 +3,98 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>14th Out of 100: Gannon Hacks at the DOE CyberForce® Competition | Gannon Hacks</title>
+<title>CyberForce® 2026: GannonHack.Club</title>
+<link rel="icon" href="../../Photo/gannon-golden-knights-logo.png" type="image/png">
+<link rel="stylesheet" href="../../css/shared.css">
 <meta name="description" content="Eleven Gannon University students competed at the U.S. Department of Energy CyberForce® Competition in Chicago and finished 14th out of 100 teams.">
 <style>
-  :root {
-    --bg: #0b0f14;
-    --surface: #121821;
-    --text: #e6ebf0;
-    --muted: #9aa7b4;
-    --accent: #00d17a;
-    --accent-2: #c8102e;
-    --border: #233040;
+  article.post {
+    --p-bg: #0b0f14;
+    --p-surface: #121821;
+    --p-text: #e6ebf0;
+    --p-muted: #9aa7b4;
+    --p-accent: #00d17a;
+    --p-accent-2: #c8102e;
+    --p-border: #233040;
   }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    font-size: 18px;
-    line-height: 1.7;
-  }
-  article { max-width: 760px; margin: 0 auto; padding: 48px 20px 80px; }
+  article.post { max-width: 760px; margin: 0 auto; padding: 48px 20px 80px; color: var(--p-text); font-size: 18px; line-height: 1.7; }
+  article.post h1, article.post h2 { color: var(--p-text); }
+  .back { display:inline-block; margin-bottom:18px; font-size:15px; text-decoration:none; }
   .tag {
     display: inline-block;
     font-family: "JetBrains Mono", Consolas, monospace;
     font-size: 13px;
     letter-spacing: .08em;
     text-transform: uppercase;
-    color: var(--accent);
-    border: 1px solid var(--accent);
+    color: var(--p-accent);
+    border: 1px solid var(--p-accent);
     border-radius: 4px;
     padding: 2px 10px;
   }
-  h1 { font-size: clamp(30px, 5vw, 44px); line-height: 1.2; margin: 18px 0 12px; }
-  h2 { font-size: 26px; margin: 48px 0 12px; }
-  h2::before { content: "> "; color: var(--accent); font-family: Consolas, monospace; }
-  .meta { color: var(--muted); font-size: 15px; margin-bottom: 32px; }
-  a { color: var(--accent); }
-  p { margin: 0 0 18px; }
+  article.post h1 { font-size: clamp(30px, 5vw, 44px); line-height: 1.2; margin: 18px 0 12px; }
+  article.post h2 { font-size: 26px; margin: 48px 0 12px; }
+  article.post h2::before { content: "> "; color: var(--p-accent); font-family: Consolas, monospace; }
+  .meta { color: var(--p-muted); font-size: 15px; margin-bottom: 32px; }
+  article.post a { color: var(--p-accent); }
+  article.post p { margin: 0 0 18px; }
 
   .stat {
     display: flex; align-items: center; gap: 20px;
-    background: var(--surface); border: 1px solid var(--border);
-    border-left: 4px solid var(--accent);
+    background: var(--p-surface); border: 1px solid var(--p-border);
+    border-left: 4px solid var(--p-accent);
     border-radius: 8px; padding: 20px 24px; margin: 28px 0;
   }
-  .stat .num { font-size: 52px; font-weight: 800; color: var(--accent); line-height: 1; }
-  .stat .label { color: var(--muted); font-size: 16px; }
-  .stat .label strong { color: var(--text); display: block; font-size: 18px; }
+  .stat .num { font-size: 52px; font-weight: 800; color: var(--p-accent); line-height: 1; }
+  .stat .label { color: var(--p-muted); font-size: 16px; }
+  .stat .label strong { color: var(--p-text); display: block; font-size: 18px; }
 
-  /* Photo placeholders: replace each <div class="photo"> with an <img> */
-  figure { margin: 32px 0; }
-  .photo {
-    aspect-ratio: 16 / 9;
-    background: repeating-linear-gradient(45deg, #121821, #121821 12px, #161e29 12px, #161e29 24px);
-    border: 2px dashed var(--border);
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    color: var(--muted); font-family: Consolas, monospace; font-size: 15px; text-align: center; padding: 16px;
-  }
-  figure img { width: 100%; height: auto; border-radius: 10px; display: block; }
-  figcaption { color: var(--muted); font-size: 14px; margin-top: 8px; text-align: center; }
+  article.post figure { margin: 32px 0; }
+  article.post figure img { width: 100%; height: auto; border-radius: 10px; display: block; }
+  article.post figcaption { color: var(--p-muted); font-size: 14px; margin-top: 8px; text-align: center; }
 
-  .roster {
-    list-style: none; padding: 0; margin: 20px 0;
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 10px;
-  }
-  .roster li {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 6px; padding: 10px 14px; font-size: 16px;
-  }
-  .roster a { text-decoration: none; color: var(--text); }
-  .roster a:hover { color: var(--accent); }
-
-  blockquote {
+  article.post blockquote {
     margin: 24px 0; padding: 22px 26px;
-    background: var(--surface); border: 1px solid var(--border);
-    border-left: 4px solid var(--accent-2); border-radius: 8px;
+    background: var(--p-surface); border: 1px solid var(--p-border);
+    border-left: 4px solid var(--p-accent-2); border-radius: 8px;
   }
-  blockquote p { font-style: italic; }
-  blockquote cite { display: block; font-style: normal; font-weight: 700; color: var(--accent); font-size: 16px; }
-  blockquote cite span { display: block; font-weight: 400; color: var(--muted); font-size: 14px; }
+  article.post blockquote p { font-style: italic; }
+  article.post blockquote cite { display: block; font-style: normal; font-weight: 700; color: var(--p-accent); font-size: 16px; }
+  article.post blockquote cite span { display: block; font-weight: 400; color: var(--p-muted); font-size: 14px; }
 
   .cta {
     margin-top: 48px; padding: 28px; text-align: center;
     background: linear-gradient(135deg, rgba(0,209,122,.12), rgba(200,16,46,.12));
-    border: 1px solid var(--border); border-radius: 10px;
+    border: 1px solid var(--p-border); border-radius: 10px;
   }
   .cta a.btn {
     display: inline-block; margin-top: 10px; padding: 12px 26px;
-    background: var(--accent); color: #04110a; font-weight: 700;
+    background: var(--p-accent); color: #04110a; font-weight: 700;
     border-radius: 6px; text-decoration: none;
   }
-  .hashtags { color: var(--muted); font-size: 15px; margin-top: 32px; }
+  .hashtags { color: var(--p-muted); font-size: 15px; margin-top: 32px; }
 </style>
 </head>
 <body>
-<article>
+<canvas id="dotCanvas"></canvas>
+<nav>
+  <a href="../../index.html" class="nav-logo">Gannon<span>Hack</span>.Club</a>
+  <div class="nav-links">
+    <a href="../../index.html">Home</a>
+    <a href="../../about/index.html">About Us</a>
+    <a href="../index.html" class="active">Blog</a>
+    <a href="https://ctf.gannonhacks.club" target="_blank" rel="noopener">CTF</a>
+    <a href="../../contact/index.html">Contact</a>
+  </div>
+</nav>
+<div class="page-wrap">
+<article class="post">
+  <a class="back" href="../index.html">&larr; Back to Blog</a><br>
 
   <span class="tag">Competition Recap</span>
   <h1>14th Out of 100: Gannon Hacks Takes On the DOE CyberForce® Competition</h1>
   <div class="meta">Gannon Hacks Cyber Club · November 2026 · Chicago, IL</div>
 
-  <!-- PHOTO 1: replace the div below with <img src="your-photo.jpg" alt="..."> -->
+  <!-- PHOTO 1 -->
   <figure>
     <img src="../../Photo/gallery/Cyberforce1.jpg" alt="The full Gannon group at the CyberForce venue in Chicago" />
     <figcaption>Gannon University's CyberForce® competitors in Chicago.</figcaption>
@@ -143,13 +131,14 @@
   </figure>
 
   <h2>Meet Our Competitors</h2>
-  <img src="../../Photo/gallery/Cyberforce5.jpg" alt="Eleven students representing Gannon University" />
-  <p>Eleven students represented Gannon in Chicago, many of them newer Gannon Hacks members competing for the very first time:</p>
+  <figure>
+    <img src="../../Photo/gallery/Cyberforce5.jpg" alt="Eleven students representing Gannon University" />
+  </figure>
+  <p>Eleven students represented Gannon in Chicago, many of them newer Gannon Hacks members competing for the very first time.</p>
 
   <!-- PHOTO 4 -->
   <figure>
     <img src="../../Photo/gallery/Cyberforce6.jpg" alt="Group photo of all eleven competitors" />
-    <div class="photo">📷 PHOTO 4 — </div>
     <figcaption>Gannon's CyberForce® 2026 competitors.</figcaption>
   </figure>
 
@@ -193,5 +182,8 @@
   <p class="hashtags">#CyberForce #Cybersecurity #GannonUniversity #GannonHacks</p>
 
 </article>
+  <footer>&copy; 2026 <span>GannonHack.Club</span> &middot; Gannon University &middot; Erie, PA</footer>
+</div>
+<script src="../../js/shared.js"></script>
 </body>
 </html>
